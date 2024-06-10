@@ -89,31 +89,36 @@ export default function Students() {
                 <h1 className="text-light text-end">مستر / محسن عطية</h1>
               </div>
             </div>
-            <div className="col-md-12 d-flex justify-content-between">
-              <Link onClick={handleShow}>
-                <div className={`${Style.romadyBorder} p-3 rounded-1`}>
-                  <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
-                </div>
-              </Link>
-              <div className="d-flex justify-content-center">
-                <div className={`${Style.romady} rounded-3 p-3`}>
-                  <ul className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}>
-                    <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/students'} className="text-decoration-none text-white fw-bolder">Students</Link>
-                    </li>
-                    <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
-                    </li>
-                    <li className="mx-5 mb-md-0 mb-2">
-                      <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
-                    </li>
-                    <li className="mx-5 mb-md-0 mb-2">
-                      <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
+            <div className="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center">
+  <Link onClick={handleShow} className='d-md-none mt-3 order-2 order-md-1'>
+    <div className={`${Style.romadyBorder} p-3 rounded-1`}>
+      <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
+    </div>
+  </Link>
+  <div className="d-flex justify-content-center order-1 order-md-2">
+    <div className={`${Style.romady} rounded-3 p-3`}>
+      <ul className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}>
+        <li className="mx-5 mb-md-0 mb-2">
+          <Link to={'/students'} className="text-decoration-none text-white fw-bolder">Students</Link>
+        </li>
+        <li className="mx-5 mb-md-0 mb-2">
+          <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
+        </li>
+        <li className="mx-5 mb-md-0 mb-2">
+          <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
+        </li>
+        <li className="mx-5 mb-md-0 mb-2">
+          <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <Link onClick={handleShow} className='d-none d-md-block order-2 order-md-1 mb-3 mb-md-0'>
+    <div className={`${Style.romadyBorder} p-3 rounded-1`}>
+      <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
+    </div>
+  </Link>
+</div>
           </div>
 
           <div className="row mb-4">

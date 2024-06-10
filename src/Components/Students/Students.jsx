@@ -14,6 +14,8 @@ export default function Students() {
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchOption, setSearchOption] = useState('Name');
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -34,7 +36,7 @@ export default function Students() {
         console.error('Error fetching students:', error);
         setLoading(false);
       });
-  }, [students]);
+  }, []);
 
   const deleteStudent = async (id) => {
     try {
@@ -60,8 +62,19 @@ export default function Students() {
       if (result.isConfirmed) {
         deleteStudent(id);
       }
-    }); 
+    });
   };
+
+  const filteredStudents = students.filter(student => {
+    if (searchOption === 'Name') {
+      return student.Name.toLowerCase().includes(searchTerm.toLowerCase());
+    } else if (searchOption === 'phoneNumber') {
+      return student.phoneNumber.includes(searchTerm);
+    } else if (searchOption === 'studentCode') {
+      return String(student.studentCode).includes(searchTerm);
+    }
+    return false;
+  });
 
   return (
     <>
@@ -77,7 +90,7 @@ export default function Students() {
               </div>
             </div>
             <div className="col-md-12 d-flex justify-content-between">
-            <Link onClick={handleShow}>
+              <Link onClick={handleShow}>
                 <div className={`${Style.romadyBorder} p-3 rounded-1`}>
                   <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
                 </div>
@@ -102,13 +115,37 @@ export default function Students() {
               </div>
             </div>
           </div>
+
+          <div className="row mb-4">
+            <div className="col-md-4">
+              <select
+                className="form-select"
+                value={searchOption}
+                onChange={(e) => setSearchOption(e.target.value)}
+              >
+                <option value="Name">Name</option>
+                <option value="phoneNumber">Phone Number</option>
+                <option value="studentCode">Student Code</option>
+              </select>
+            </div>
+            <div className="col-md-8">
+              <input
+                type="text"
+                className="form-control"
+                placeholder={`Search by ${searchOption}`}
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+          </div>
+
           {loading ? (
             <div className="d-flex justify-content-center">
               <Audio height="80" width="80" color="gray" ariaLabel="loading" />
             </div>
           ) : (
             <div className="row gy-5 "  style={{ direction: 'rtl' }}>
-              {students.map(student => (
+              {filteredStudents.map(student => (
                 <div className="col-md-3 text-dark " key={student._id}>
                   <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
                     <h4>الاسم:<span className="h5"> {student.Name}</span></h4>

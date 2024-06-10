@@ -118,6 +118,7 @@ export default function Session() {
             <div className="row gy-4 " style={{ direction: 'rtl' }}>
               {sessions.map(session => (
                 <div className="col-md-3" key={session._id}>
+                  <Link to={`/group/${ID}/${session._id}`}>
                   <div className={`${Style.romadyi} d-flex flex-column justify-content-center p-3 align-items-center rounded-2`}>
                   <i class="fa-regular fa-clock fs-1 mb-3"></i>
                     <h3>{session.name}</h3>
@@ -126,6 +127,7 @@ export default function Session() {
                       <button onClick={() => handleDeleteClick(session._id)} className="btn btn-danger w-50 mx-2">Delete</button>
                     </div>
                   </div>
+                  </Link>
                 </div>
               ))}
             </div>

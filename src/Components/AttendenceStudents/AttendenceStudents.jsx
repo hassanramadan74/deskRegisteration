@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import Style from './Students.module.css';
+import Style from './AttendenceStudents.module.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Audio } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
-import ModalComponent from '../Modal/Modal.jsx';
 import Swal from 'sweetalert2';
-import UpdateModal from '../Modal/UpdateModal.jsx';
+import toast from 'react-hot-toast';
 
-export default function Students() {
+export default function AttendenceStudents() {
+  const { ID , sessionID } = useParams();
   const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('Name');
 
-  const handleShow = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
-
-  const handleUpdateShow = (student) => {
-    setSelectedStudent(student);
-    setShowUpdateModal(true);
-  };
-  const handleUpdateClose = () => setShowUpdateModal(false);
 
   useEffect(() => {
     axios.get('https://registration-80nq.onrender.com/api/v2/students')
@@ -38,32 +27,17 @@ export default function Students() {
       });
   }, [students]);
 
-  const deleteStudent = async (id) => {
+
+  const attendStudent = async (id) => {
     try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${id}`);
-      setStudents(students.filter(student => student._id !== id));
-      Swal.fire('Deleted!', 'Student has been deleted.', 'success');
+      await axios.post(`https://registration-80nq.onrender.com/api/v2/attendance/${ID}/${sessionID}/${id}`);
+      toast.success('Student attend successfully!');
     } catch (error) {
-      console.error('Error deleting student:', error);
-      Swal.fire('Error!', 'Could not delete student.', 'error');
+      console.error('Error attending student:', error);
+      toast.error('Student cannot be attend.');
     }
   };
 
-  const handleDeleteClick = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteStudent(id);
-      }
-    });
-  };
 
   const filteredStudents = students.filter(student => {
     if (searchOption === 'Name') {
@@ -89,12 +63,7 @@ export default function Students() {
                 <h1 className="text-light text-end">مستر / محسن عطية</h1>
               </div>
             </div>
-            <div className="col-md-12 d-flex justify-content-between">
-              <Link onClick={handleShow}>
-                <div className={`${Style.romadyBorder} p-3 rounded-1`}>
-                  <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
-                </div>
-              </Link>
+            <div className="col-md-12 d-flex justify-content-center">
               <div className="d-flex justify-content-center">
                 <div className={`${Style.romady} rounded-3 p-3`}>
                   <ul className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}>
@@ -155,9 +124,8 @@ export default function Students() {
                     <h4>سعر الحصة: <span className="h4"> {student.price}</span></h4>
                     <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>
                     <h4>الكتب: <span className="h4"> {student.books}</span></h4>
-                    <div className='d-flex justify-content-between '>
-                      <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(student)}>Update</button>
-                      <button onClick={() => handleDeleteClick(student._id)} className="btn btn-danger w-50 mx-2">Delete</button>
+                    <div className='d-flex justify-content-center my-2'>
+                      <button className="btn btn-success w-50 mx-1" onClick={() => attendStudent(student._id)}>attend</button>
                     </div>
                   </div>
                 </div>
@@ -166,16 +134,6 @@ export default function Students() {
           )}
         </div>
       </div>
-  
-      <ModalComponent show={showModal} handleClose={handleClose} />
-  
-      {selectedStudent && (
-        <UpdateModal
-          show={showUpdateModal}
-          handleClose={handleUpdateClose}
-          student={selectedStudent}
-        />
-      )}
     </>
   );
 }

@@ -152,6 +152,7 @@ export default function Students() {
             <div className="row gy-5 "  style={{ direction: 'rtl' }}>
               {filteredStudents.map(student => (
                 <div className="col-md-3 text-dark " key={student._id}>
+                  <Link to={`/students/${student._id}`}>
                   <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
                     <h4>الاسم:<span className="h5"> {student.Name}</span></h4>
                     <h4>رقم الهاتف: <span className="h4"> {student.phoneNumber}</span></h4>
@@ -165,6 +166,7 @@ export default function Students() {
                       <button onClick={() => handleDeleteClick(student._id)} className="btn btn-danger w-50 mx-2">Delete</button>
                     </div>
                   </div>
+                  </Link>
                 </div>
               ))}
             </div>

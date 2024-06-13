@@ -1,0 +1,113 @@
+
+*{
+  box-sizing: border-box;
+}
+
+.serviceHome{
+    padding: 24px ;
+  }
+  
+  .bgPrimaryMoza{
+    background-color: #023346;
+    ;
+  }
+  .romadyi{
+    background-color: #f2f3f3;
+    direction: rtl;
+    transition: all 0.3 ease;
+    box-sizing: border-box;
+  }
+  .poppinsRegular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+  }
+  .romadyBorder{
+    background-color: #f2f3f3;
+    border: #023346 2px solid;
+  }
+  .textMoza{
+    color: #023346;
+  }
+  .romadyi:hover{
+    border: 2px solid #04AA6D;
+    box-shadow: 0 0 10px rgba(4, 170, 109, 0.5); /* Adding shadow with the color #04AA6D on hover */
+
+  }
+  .romady{
+    background-color: #023346;
+    direction: rtl;
+  }
+  .romada{
+    background-color: #f2f3f3;
+    transition: all 0.3s ease;
+  border: none;
+  }
+
+
+
+  .container{
+    width: 40% !important;
+  }
+  .smoothBorderButton {
+    padding: 10px 10px;
+    color: #333;
+    background-color: #f2f3f3;
+    border: 2px solid transparent;
+    position: relative;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    
+  }
+  
+  .smoothBorderButton::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    border: 2px solid #333;
+    transition: width 0.3s ease;
+    box-sizing: border-box;
+  }
+  
+  .smoothBorderButton:hover::before {
+    width: 100%;
+  }
+  
+  .smoothBorderButton::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 0;
+    border: 2px solid #333;
+    transition: height 0.3s ease 0.3s;
+    box-sizing: border-box;
+  }
+  
+  .smoothBorderButton:hover::after {
+    height: 100%;
+  }
+  
+  .margino{
+    margin-top:100px;
+    margin-bottom:18px;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -7,13 +7,10 @@ import { Helmet } from 'react-helmet';
 import ModalComponent from '../Modal/Modal.jsx';
 import Swal from 'sweetalert2';
 import UpdateModal from '../Modal/UpdateModal.jsx';
-import BarcodeModal from '../Modal/BarcodeModal'; // Import the BarcodeModal component
 
 export default function Students() {
   const [loading, setLoading] = useState(true);
   const [students, setStudents] = useState([]);
-  const [barCodeStudent, setbarCodeStudent] = useState(null);
-  const [showBarcodeModal, setShowBarcodeModal] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -55,9 +52,16 @@ export default function Students() {
   const barCodeClick = async (id) => {
     try {
       const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${id}/qrcode`);
-      const serialNumber = response.data.serialNumber;
-      setbarCodeStudent(serialNumber);
-      setShowBarcodeModal(true);
+      const barcodeImage = response.data;
+      Swal.fire({
+        title: 'Student Barcode',
+        html: `<div style="display: flex; justify-content: center; align-items: center;">
+        <${barcodeImage} alt="Generated Barcode" />
+      </div>`,
+        imageAlt: 'Generated Barcode',
+        showCloseButton: true,
+        showConfirmButton: false
+      });
     } catch (error) {
       console.error('Error fetching student barcode:', error);
       Swal.fire('Error!', 'Could not fetch student barcode.', 'error');
@@ -177,7 +181,7 @@ export default function Students() {
                 <div className="col-md-3 text-dark" key={student._id}>
                   <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
                     <div className='d-flex justify-content-end'>
-                      <i onClick={() => barCodeClick(student._id)} className="fa-solid fa-barcode fs-2 cursor-pointer"></i>
+                    <i onClick={() => barCodeClick(student._id)}  class="fa-solid fa-qrcode fs-2 cursor-pointer"></i>
                     </div>
                     <Link to={`/students/${student._id}`} className="w-100 h-100">
                       <h4>الاسم:<span className="h5"> {student.Name}</span></h4>
@@ -210,11 +214,7 @@ export default function Students() {
         />
       )}
 
-      <BarcodeModal
-        show={showBarcodeModal}
-        handleClose={() => setShowBarcodeModal(false)}
-        serialNumber={barCodeStudent}
-      />
+
     </>
   );
 }

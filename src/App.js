@@ -25,6 +25,7 @@ let routers = createHashRouter([
     {path:'group/:ID/:sessionID',element:<ProtectedRoute><AttendenceStudents/> </ProtectedRoute>},
     {path:'students' , element: <ProtectedRoute><Students/></ProtectedRoute>},
     {path:'attendence' , element: <ProtectedRoute><Attendence/></ProtectedRoute>},
+    {path:'attendence/:ID' , element: <ProtectedRoute><Attendence/></ProtectedRoute>},
     {path:'students/:studentID' , element:<ProtectedRoute><SpecificStudent/></ProtectedRoute>},
     {path:'*' , element:<Notfound/>}
   ]}

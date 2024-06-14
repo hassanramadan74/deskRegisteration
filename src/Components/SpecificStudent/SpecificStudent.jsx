@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Style from './SpecificStudent.module.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Audio } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2';
-import toast from 'react-hot-toast';
 import GradesModal from './GradesModal.jsx';
 import UpdateStudentModal from './UpdateStudentModal.jsx';
 
@@ -96,7 +94,7 @@ export default function SpecificStudent() {
                       <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
+                    <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
                       <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>

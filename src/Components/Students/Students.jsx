@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Style from './Students.module.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Audio } from 'react-loader-spinner';
+import { Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
 import ModalComponent from '../Modal/Modal.jsx';
 import Swal from 'sweetalert2';
@@ -105,7 +105,7 @@ export default function Students() {
           <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
         </li>
         <li className="mx-5 mb-md-0 mb-2">
-          <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
+        <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
         </li>
         <li className="mx-5 mb-md-0 mb-2">
           <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
@@ -145,32 +145,41 @@ export default function Students() {
           </div>
 
           {loading ? (
-            <div className="d-flex justify-content-center">
-              <Audio height="80" width="80" color="gray" ariaLabel="loading" />
-            </div>
-          ) : (
-            <div className="row gy-5 "  style={{ direction: 'rtl' }}>
-              {filteredStudents.map(student => (
-                <div className="col-md-3 text-dark " key={student._id}>
-                  <Link to={`/students/${student._id}`}>
-                  <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
-                    <h4>الاسم:<span className="h5"> {student.Name}</span></h4>
-                    <h4>رقم الهاتف: <span className="h4"> {student.phoneNumber}</span></h4>
-                    <h4>رقم الوالد: <span className="h4"> {student.guardianPhoneNumber}</span></h4>
-                    <h4>الوصف: <span className="h4"> {student.description}</span></h4>
-                    <h4>سعر الحصة: <span className="h4"> {student.price}</span></h4>
-                    <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>
-                    <h4>الكتب: <span className="h4"> {student.books}</span></h4>
-                    <div className='d-flex justify-content-between '>
-                      <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(student)}>Update</button>
-                      <button onClick={() => handleDeleteClick(student._id)} className="btn btn-danger w-50 mx-2">Delete</button>
-                    </div>
-                  </div>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
+  <div className="d-flex justify-content-center">
+<Oval
+  visible={true}
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="oval-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  />
+  </div>
+) : (
+  <div className="row gy-5" style={{ direction: 'rtl' }}>
+    {filteredStudents.map(student => (
+      <div className="col-md-3 text-dark" key={student._id}>
+        <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
+          <Link to={`/students/${student._id}`}className="w-100 h-100 ">
+            <h4>الاسم:<span className="h5"> {student.Name}</span></h4>
+            <h4>رقم الهاتف: <span className="h4"> {student.phoneNumber}</span></h4>
+            <h4>رقم الوالد: <span className="h4"> {student.guardianPhoneNumber}</span></h4>
+            <h4>الوصف: <span className="h4"> {student.description}</span></h4>
+            <h4>سعر الحصة: <span className="h4"> {student.price}</span></h4>
+            <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>
+            <h4>الكتب: <span className="h4"> {student.books}</span></h4>
+          </Link>
+          <div className='d-flex justify-content-between mt-2'>
+            <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(student)}>Update</button>
+            <button onClick={() => handleDeleteClick(student._id)} className="btn btn-danger w-50 mx-2">Delete</button>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+)}
+
         </div>
       </div>
   

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Style from './Groups.module.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Audio } from 'react-loader-spinner';
+import { Audio, Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
 import GroupModel from './groupModel.jsx';
 import Swal from 'sweetalert2';
@@ -99,7 +99,7 @@ setShowUpdateModal(true);
           <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
         </li>
         <li className="mx-5 mb-md-0 mb-2">
-          <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
+        <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
         </li>
         <li className="mx-5 mb-md-0 mb-2">
           <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
@@ -116,22 +116,31 @@ setShowUpdateModal(true);
           </div>
           {loading ? (
           <div className="d-flex justify-content-center">
-            <Audio height="80" width="80" color="gray" ariaLabel="loading" />
+<Oval
+  visible={true}
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="oval-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  />
           </div>
         ) : (
           <div className="row gy-4 "  style={{ direction: 'rtl' }}>
             {groups.map(group => (
               <div className="col-md-3" key={group._id}>
-                <Link to={`/group/${group._id}`}>
                 <div className={`${Style.romadyi} d-flex flex-column justify-content-center p-3 align-items-center rounded-2`}>
+                <Link to={`/group/${group._id}` } className="w-100 h-100 text-center">
+                
                   <i className="fa-solid fa-user-group fs-1 my-3"></i>
                   <h3>{group.Name}</h3>
+              </Link>
                   <div className='d-flex justify-content-between '>
                       <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(group)}>Update</button>
                       <button onClick={() => handleDeleteClick(group._id)} className="btn btn-danger w-50 mx-2">Delete</button>
                     </div>
                 </div>
-              </Link>
               </div>
             ))}
           </div>

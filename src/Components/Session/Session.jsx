@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Style from './Session.module.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Audio } from 'react-loader-spinner';
+import { Audio, Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
 import Swal from 'sweetalert2';
 import UpdateSession from './UpdateSession.jsx';
@@ -36,7 +36,7 @@ export default function Session() {
         console.error('Error fetching sessions:', error);
         setLoading(false);
       });
-  }, [ID,sessions]);
+  }, [sessions]);
 
   const deleteSession = async (id) => {
     try {
@@ -94,7 +94,7 @@ export default function Session() {
           <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
         </li>
         <li className="mx-5 mb-md-0 mb-2">
-          <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
+        <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
         </li>
         <li className="mx-5 mb-md-0 mb-2">
           <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
@@ -112,22 +112,30 @@ export default function Session() {
           </div>
           {loading ? (
             <div className="d-flex justify-content-center">
-              <Audio height="80" width="80" color="gray" ariaLabel="loading" />
+<Oval
+  visible={true}
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="oval-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  />
             </div>
           ) : (
             <div className="row gy-4 " style={{ direction: 'rtl' }}>
               {sessions.map(session => (
                 <div className="col-md-3" key={session._id}>
-                  <Link to={`/group/${ID}/${session._id}`}>
                   <div className={`${Style.romadyi} d-flex flex-column justify-content-center p-3 align-items-center rounded-2`}>
+                  <Link to={`/group/${ID}/${session._id}`} className="w-100 h-100 text-center">
                   <i class="fa-regular fa-clock fs-1 mb-3"></i>
                     <h3>{session.name}</h3>
+                  </Link>
                     <div className='d-flex justify-content-between '>
                       <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(session)}>Update</button>
                       <button onClick={() => handleDeleteClick(session._id)} className="btn btn-danger w-50 mx-2">Delete</button>
                     </div>
                   </div>
-                  </Link>
                 </div>
               ))}
             </div>

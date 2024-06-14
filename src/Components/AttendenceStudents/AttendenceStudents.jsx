@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Style from './AttendenceStudents.module.css';
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
-import { Audio } from 'react-loader-spinner';
+import {  Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
-import Swal from 'sweetalert2';
 import toast from 'react-hot-toast';
 
 export default function AttendenceStudents() {
@@ -110,7 +109,15 @@ export default function AttendenceStudents() {
 
           {loading ? (
             <div className="d-flex justify-content-center">
-              <Audio height="80" width="80" color="gray" ariaLabel="loading" />
+<Oval
+  visible={true}
+  height="80"
+  width="80"
+  color="#4fa94d"
+  ariaLabel="oval-loading"
+  wrapperStyle={{}}
+  wrapperClass=""
+  />
             </div>
           ) : (
             <div className="row gy-5 "  style={{ direction: 'rtl' }}>

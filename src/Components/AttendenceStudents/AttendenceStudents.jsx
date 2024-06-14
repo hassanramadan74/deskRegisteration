@@ -73,7 +73,7 @@ export default function AttendenceStudents() {
                       <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link className="text-decoration-none text-white fw-bolder">Sessions</Link>
+                    <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
                       <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
@@ -126,7 +126,7 @@ export default function AttendenceStudents() {
                   <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
                     <h4>الاسم:<span className="h5"> {student.Name}</span></h4>
                     <h4>رقم الهاتف: <span className="h4"> {student.phoneNumber}</span></h4>
-                    <h4>رقم الوالد: <span className="h4"> {student.guardianPhoneNumber}</span></h4>
+                    <h4> الحضور : <span className="h4"> {student.lastAttendance.date}</span></h4>
                     <h4>الوصف: <span className="h4"> {student.description}</span></h4>
                     <h4>سعر الحصة: <span className="h4"> {student.price}</span></h4>
                     <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>

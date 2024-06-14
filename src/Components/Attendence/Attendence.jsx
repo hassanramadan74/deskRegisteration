@@ -46,6 +46,8 @@ export default function Attendence() {
     setSelectedSession(event.target.value);
   };
 
+
+  
   useEffect(() => {
     if (selectedGroup && selectedSession) {
       axios.get(`https://registration-80nq.onrender.com/api/v2/sessions/${selectedGroup}/${selectedSession}`)
@@ -57,6 +59,13 @@ export default function Attendence() {
         });
     }
   }, [selectedGroup, selectedSession]);
+
+
+
+
+
+
+
 
   return (
     <>

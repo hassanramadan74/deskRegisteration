@@ -13,6 +13,7 @@ import {
   InputGroup,
   InputRightElement,
   Icon,
+  Text,
 } from '@chakra-ui/react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'; // Import icons from react-icons
 
@@ -22,7 +23,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const { toggleColorMode } = useColorMode();
-  const formBackground = useColorModeValue('gray.100', 'gray.700');
+  const formBackground = useColorModeValue('teal.200', 'green.200');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -52,15 +54,17 @@ const Login = () => {
   };
 
   return (
-    <Flex h="100vh" alignItems="center" justifyContent="center">
-      <Flex
+    <Flex flexDirection="column" h="100vh" alignItems="center" justifyContent="center">
+<Text mb={20} fontSize='5xl'>
+  Brought to you by <Text as='span' color='teal.500'>H&M</Text>
+</Text>      <Flex
         flexDirection="column"
         bg={formBackground}
         p={12}
         borderRadius={8}
         boxShadow="lg"
       >
-        <Heading mb={6}>Log In</Heading>
+        <Heading color="black" mb={6}>Log In</Heading>
         <form onSubmit={handleSubmit}>
           <Input
             placeholder="johndoe@gmail.com"
@@ -93,7 +97,7 @@ const Login = () => {
             Log In
           </Button>
         </form>
-        <FormControl display="flex" alignItems="center">
+        {/* <FormControl display="flex" alignItems="center">
           <FormLabel htmlFor="dark_mode" mb="0">
             Enable Dark Mode?
           </FormLabel>
@@ -103,7 +107,7 @@ const Login = () => {
             size="lg"
             onChange={toggleColorMode}
           />
-        </FormControl>
+        </FormControl> */}
       </Flex>
     </Flex>
   );

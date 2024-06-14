@@ -39,3 +39,16 @@
     background-color: #023346;
     direction: rtl;
   }
+
+
+  .romada{
+    background-color: #f2f3f3;
+    transition: all 0.3s ease;
+  border: none;
+  }
+
+
+
+  .container{
+    width: 40% !important;
+  }

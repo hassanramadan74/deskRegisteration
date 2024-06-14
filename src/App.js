@@ -12,6 +12,7 @@ import SpecificStudent from './Components/SpecificStudent/SpecificStudent.jsx';
 import LoginPage from './Components/Login/Login.jsx';
 import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
 import Attendence from './Components/Attendence/Attendence.jsx';
+import QrcodeAttendence from './Components/QrcodeAttendence/QrcodeAttendence.jsx';
 
 
 
@@ -25,7 +26,7 @@ let routers = createHashRouter([
     {path:'group/:ID/:sessionID',element:<ProtectedRoute><AttendenceStudents/> </ProtectedRoute>},
     {path:'students' , element: <ProtectedRoute><Students/></ProtectedRoute>},
     {path:'attendence' , element: <ProtectedRoute><Attendence/></ProtectedRoute>},
-    {path:'attendence/:ID' , element: <ProtectedRoute><Attendence/></ProtectedRoute>},
+    {path:'attendence/:ID' , element: <ProtectedRoute><QrcodeAttendence/></ProtectedRoute>},
     {path:'students/:studentID' , element:<ProtectedRoute><SpecificStudent/></ProtectedRoute>},
     {path:'*' , element:<Notfound/>}
   ]}

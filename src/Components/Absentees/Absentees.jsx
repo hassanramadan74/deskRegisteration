@@ -1,54 +1,58 @@
 import React, { useEffect, useState } from 'react';
-import Style from './Students.module.css';
+import Style from './Absentees.module.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
-import ModalComponent from '../Modal/Modal.jsx';
+import toast from 'react-hot-toast';
+import { Oval } from 'react-loader-spinner';
 import Swal from 'sweetalert2';
-import UpdateModal from '../Modal/UpdateModal.jsx';
 
-export default function Students() {
+export default function Absentees() {
   const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [groups, setGroups] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState(localStorage.getItem('selectedGroup') || '');
+  const [sessions, setSessions] = useState([]);
+  const [selectedSession, setSelectedSession] = useState(localStorage.getItem('selectedSession') || '');
+  const [absentees, setAbsentees] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('Name');
-
-  const handleShow = () => setShowModal(true);
-  const handleClose = () => setShowModal(false);
-
-  const handleUpdateShow = (student) => {
-    setSelectedStudent(student);
-    setShowUpdateModal(true);
+  const containerStyle = {
+    direction: 'rtl',
   };
-  const handleUpdateClose = () => setShowUpdateModal(false);
 
   useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/students')
+    axios.get('https://registration-80nq.onrender.com/api/v2/groups')
       .then(response => {
-        setStudents(response.data.students);
+        setGroups(response.data.groups);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Error fetching students:', error);
+        console.error('Error fetching groups:', error);
         setLoading(false);
       });
-  }, [students]);
+  }, []);
 
-  const deleteStudent = async (id) => {
-    try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${id}`);
-      setStudents(students.filter(student => student._id !== id));
-      Swal.fire('Deleted!', 'Student has been deleted.', 'success');
-    } catch (error) {
-      console.error('Error deleting student:', error);
-      Swal.fire('Error!', 'Could not delete student.', 'error');
+  useEffect(() => {
+    if (selectedGroup) {
+      axios.get(`https://registration-80nq.onrender.com/api/v2/sessions/${selectedGroup}`)
+        .then(response => {
+          setSessions(response.data.sessions);
+          setLoading(false);
+        })
+        .catch(error => {
+          console.error('Error fetching sessions:', error);
+          setLoading(false);
+        });
     }
-  };
+  }, [selectedGroup]);
 
+  useEffect(() => {
+    localStorage.setItem('selectedGroup', selectedGroup);
+  }, [selectedGroup]);
+
+  useEffect(() => {
+    localStorage.setItem('selectedSession', selectedSession);
+  }, [selectedSession]);
   const barCodeClick = async (id) => {
     try {
       const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${id}/qrcode`);
@@ -68,23 +72,21 @@ export default function Students() {
     }
   };
 
-  const handleDeleteClick = (id) => {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        deleteStudent(id);
-      }
-    });
-  };
-
-  const filteredStudents = students.filter(student => {
+  useEffect(() => {
+    if (selectedGroup && selectedSession) {
+      axios.get(`https://registration-80nq.onrender.com/api/v2/attendance/${selectedGroup}/${selectedSession}`)
+        .then(response => {
+          console.log(response);
+          setAbsentees(response.data.absentees);
+          toast.success('Attendance data fetched successfully!');
+        })
+        .catch(error => {
+          console.error('Error fetching attendance:', error);
+          toast.error('Failed to fetch attendance data');
+        });
+    }
+  }, [selectedGroup, selectedSession]);
+  const filteredStudents = absentees.filter(student => {
     if (searchOption === 'Name') {
       return student.Name.toLowerCase().includes(searchTerm.toLowerCase());
     } else if (searchOption === 'phoneNumber') {
@@ -98,7 +100,7 @@ export default function Students() {
   return (
     <>
       <Helmet>
-        <title>Students</title>
+        <title>Attendance</title>
       </Helmet>
       <div className={` ${Style.serviceHome}`}>
         <div className="container-fluid">
@@ -108,13 +110,8 @@ export default function Students() {
                 <h1 className="text-light text-end">مستر / محسن عطية</h1>
               </div>
             </div>
-            <div className="col-12 d-flex flex-column flex-md-row justify-content-between align-items-center">
-              <Link onClick={handleShow} className='d-md-none mt-3 order-2 order-md-1'>
-                <div className={`${Style.romadyBorder} p-3 rounded-1`}>
-                  <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
-                </div>
-              </Link>
-              <div className="d-flex justify-content-center order-1 order-md-2">
+            <div className="col-md-12 d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
                 <div className={`${Style.romady} rounded-3 p-3`}>
                   <ul className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}>
                     <li className="mx-5 mb-md-0 mb-2">
@@ -127,42 +124,66 @@ export default function Students() {
                       <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/absentees'} className="text-decoration-none text-white fw-bolder">Attendance</Link>
+                      <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
                     </li>
                   </ul>
                 </div>
               </div>
-              <Link onClick={handleShow} className='d-none d-md-block order-2 order-md-1 mb-3 mb-md-0'>
-                <div className={`${Style.romadyBorder} p-3 rounded-1`}>
-                  <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
+            </div>
+          </div>
+
+          <div className={`${Style.romada} rounded-2 container`} style={containerStyle} >
+            <div className="row p-3">
+            <div className="col-md-12 my-3 d-flex">
+                <div className="d-flex flex-column flex-md-row w-100">
+                  <select
+                    className="form-select w-50 mb-2 mb-md-0"
+                    value={selectedGroup}
+                    onChange={e => setSelectedGroup(e.target.value)}
+                  >
+                    <option value="">Select Group</option>
+                    {groups.map(group => (
+                      <option key={group._id} value={group._id}>{group.Name}</option>
+                    ))}
+                  </select>
+                  {selectedGroup && (
+                    <select
+                      className="form-select w-50 mx-md-2 mb-2 mb-md-0"
+                      value={selectedSession}
+                      onChange={e => setSelectedSession(e.target.value)}
+                    >
+                      <option value="">Select Session</option>
+                      {sessions.map(session => (
+                        <option key={session._id} value={session._id}>{session.name}</option>
+                      ))}
+                    </select>
+                  )}
                 </div>
-              </Link>
+              </div>
+              <div className="col-md-12 d-flex mb-3">
+                <div className="col-md-4 mb-md-0 mb-2">
+                  <select
+                    className="form-select"
+                    value={searchOption}
+                    onChange={e => setSearchOption(e.target.value)}
+                  >
+                    <option value="Name">Name</option>
+                    <option value="phoneNumber">Phone Number</option>
+                    <option value="studentCode">Student Code</option>
+                  </select>
+                </div>
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder={`Search by ${searchOption}`}
+                    value={searchTerm}
+                    onChange={e => setSearchTerm(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-
-          <div className="row mb-4">
-            <div className="col-md-4 mb-md-0 mb-2">
-              <select
-                className="form-select"
-                value={searchOption}
-                onChange={(e) => setSearchOption(e.target.value)}
-              >
-                <option value="Name">Name</option>
-                <option value="phoneNumber">Phone Number</option>
-                <option value="studentCode">Student Code</option>
-              </select>
-            </div>
-            <div className="col-md-8">
-              <input
-                type="text"
-                className="form-control"
-                placeholder={`Search by ${searchOption}`}
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            </div>
-          </div>
-
           {loading ? (
             <div className="d-flex justify-content-center">
               <Oval
@@ -176,7 +197,7 @@ export default function Students() {
               />
             </div>
           ) : (
-            <div className="row gy-5" style={{ direction: 'rtl' }}>
+            <div className="row gy-5 my-4" style={{ direction: 'rtl' }}>
               {filteredStudents.map(student => (
                 <div className="col-md-3 text-dark" key={student._id}>
                   <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
@@ -192,10 +213,7 @@ export default function Students() {
                       <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>
                       <h4>الكتب: <span className="h4"> {student.books}</span></h4>
                     </Link>
-                    <div className='d-flex justify-content-between mt-2'>
-                      <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(student)}>Update</button>
-                      <button onClick={() => handleDeleteClick(student._id)} className="btn btn-danger w-50 mx-2">Delete</button>
-                    </div>
+
                   </div>
                 </div>
               ))}
@@ -203,18 +221,6 @@ export default function Students() {
           )}
         </div>
       </div>
-
-      <ModalComponent show={showModal} handleClose={handleClose} />
-
-      {selectedStudent && (
-        <UpdateModal
-          show={showUpdateModal}
-          handleClose={handleUpdateClose}
-          student={selectedStudent}
-        />
-      )}
-
-
     </>
   );
 }

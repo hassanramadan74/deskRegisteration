@@ -111,7 +111,7 @@ export default function QrcodeAttendence() {
                       <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link className="text-decoration-none text-white fw-bolder">Attendance</Link>
+                      <Link to={'/absentees'} className="text-decoration-none text-white fw-bolder">Attendance</Link>
                     </li>
                   </ul>
                 </div>

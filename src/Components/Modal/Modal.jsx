@@ -42,10 +42,10 @@ const ModalComponent = ({ show, handleClose }) => {
     guardianPhoneNumber: Yup.string()
       .matches(/^\d{11}$/, 'Guardian phone number must be exactly 11 digits')
       .required('Guardian phone number is required'),
-    description: Yup.string().required('Description is required'),
+    description: Yup.string().optional(),
     group: Yup.string().required('Please select a group'),
-    price: Yup.number().optional('Price is required').min(0, 'Price must be a positive number'),
-    books: Yup.number().required('Books are required').min(0, 'Books must be a positive number') // Validation for the books field
+    price: Yup.number().optional().min(0, 'Price must be a positive number'),
+    books: Yup.number().optional().min(0, 'books must be a positive number')
   });
 
   const handleSubmit = (values) => {
@@ -54,7 +54,9 @@ const ModalComponent = ({ show, handleClose }) => {
     if (!submitValues.price) {
       delete submitValues.price;
     }
-
+    if (!submitValues.description) {
+      delete submitValues.description;
+    }
     console.log(submitValues);
     axios.post('https://registration-80nq.onrender.com/api/v2/students', submitValues)
       .then(response => {

@@ -48,11 +48,17 @@ const UpdateModal = ({ show, handleClose, student }) => {
   });
 
   const handleSubmit = (values) => {
-    if (!values.books) {
-      delete values.books;
+    const updatedValues = { ...values }; 
+
+    if (!updatedValues.books) {
+      delete updatedValues.books;
     }
-    axios.put(`https://registration-80nq.onrender.com/api/v2/students/${student._id}`, values)
+    if (!updatedValues.description) {
+      delete updatedValues.description;
+    }
+    axios.put(`https://registration-80nq.onrender.com/api/v2/students/${student._id}`, updatedValues)
       .then(response => {
+        console.log(response);
         toast.success('Student updated successfully!');
         handleClose();
       })

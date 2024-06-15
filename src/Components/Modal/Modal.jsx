@@ -57,6 +57,9 @@ const ModalComponent = ({ show, handleClose }) => {
     if (!submitValues.description) {
       delete submitValues.description;
     }
+    if (!submitValues.books) {
+      delete submitValues.books;
+    }
     console.log(submitValues);
     axios.post('https://registration-80nq.onrender.com/api/v2/students', submitValues)
       .then(response => {

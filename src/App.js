@@ -20,9 +20,9 @@ import Absentees from './Components/Absentees/Absentees.jsx';
 
 let routers = createHashRouter([
   { path:'/',element:<Layout/> , children:[
-    {index:true,element:<ProtectedRoute><Home/></ProtectedRoute>},
+    {index:true,element:<LoginPage/>},
+    {path:'home',element:<ProtectedRoute><Home/></ProtectedRoute>},
     {path:'group',element:<ProtectedRoute><Group/></ProtectedRoute>},
-    {path:'login',element:<LoginPage/>},
     {path:'group/:ID',element: <ProtectedRoute><Session/></ProtectedRoute>},
     {path:'group/:ID/:sessionID',element:<ProtectedRoute><AttendenceStudents/> </ProtectedRoute>},
     {path:'students' , element: <ProtectedRoute><Students/></ProtectedRoute>},

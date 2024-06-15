@@ -63,7 +63,7 @@ export default function Login() {
                         <p className={`${Style.poppinsRegular} mb-5`}>
                            This is the official website registration for mr.mohsen 
                         </p>
-                        <Link className="btn btn-outline-success pe-3 fw-bolder" to={`group`}> Register now<i className="fa-solid fa-arrow-right ps-2"></i></Link>
+                        <Link className="btn btn-outline-success pe-3 fw-bolder" to={`/group`}> Register now<i className="fa-solid fa-arrow-right ps-2"></i></Link>
                     </div>
                 </div>
             </div>

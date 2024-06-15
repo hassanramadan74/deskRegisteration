@@ -41,7 +41,7 @@ const Login = () => {
       if (response.data.message === 'success') {
         localStorage.setItem("userToken",response.data.token);
         setUserToken(response.data.token);
-        navigate('/');
+        navigate('/home');
       }
     } catch (error) {
       console.error('Error:', error.response.data);

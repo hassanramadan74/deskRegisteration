@@ -40,11 +40,11 @@ export default function AttendenceStudents() {
 
   const filteredStudents = students.filter(student => {
     if (searchOption === 'Name') {
-      return student.Name.toLowerCase().includes(searchTerm.toLowerCase());
+      return student?.Name?.toLowerCase().includes(searchTerm?.toLowerCase());
     } else if (searchOption === 'phoneNumber') {
-      return student.phoneNumber.includes(searchTerm);
+      return student?.phoneNumber.includes(searchTerm);
     } else if (searchOption === 'studentCode') {
-      return String(student.studentCode).includes(searchTerm);
+      return String(student?.studentCode).includes(searchTerm);
     }
     return false;
   });

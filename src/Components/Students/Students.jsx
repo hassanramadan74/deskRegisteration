@@ -141,7 +141,6 @@ export default function Students() {
                     <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
                   </div>
                 </Link>
-                <button onClick={handleStudentLogin} className={`${Style.cordi} py-3 px-3 rounded-2 fw-bolder ms-3`}>Sign up</button>
               </div>
             </div>
           </div>

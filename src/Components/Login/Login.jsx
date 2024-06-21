@@ -100,7 +100,7 @@ const Login = () => {
               />
             </InputRightElement>
           </InputGroup>
-          <Button type="submit" colorScheme="teal" mb={8}>
+          <Button type="submit" colorScheme="teal" mb={8} width="100%" >
             Log In
           </Button>
         </form>

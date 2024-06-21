@@ -174,7 +174,7 @@ export default function SpecificStudent() {
                   <i className={`${Style.bronzi} fa-solid fa-medal fs-2`}></i>
                 </div>
                 <div>
-                <h4>الثاني : {topFiv[2]?.name}</h4>
+                <h4>التالت : {topFiv[2]?.name}</h4>
                 <h4>النتيجة : {topFiv[2]?.average}</h4>
                 </div>
               </div>
@@ -183,7 +183,7 @@ export default function SpecificStudent() {
                   <i className="fa-solid fa-star fs-2"></i>
                 </div>
                 <div>
-                <h4>الثاني : {topFiv[3]?.name}</h4>
+                <h4>الرابع : {topFiv[3]?.name}</h4>
                 <h4>النتيجة : {topFiv[3]?.average}</h4>
                 </div>
               </div>
@@ -192,7 +192,7 @@ export default function SpecificStudent() {
                   <i className="fa-solid fa-star fs-2"></i>
                 </div>
                 <div>
-                <h4>الثاني : {topFiv[4]?.name}</h4>
+                <h4>الخامس : {topFiv[4]?.name}</h4>
                 <h4>النتيجة : {topFiv[4]?.average}</h4>
                 </div>
               </div>

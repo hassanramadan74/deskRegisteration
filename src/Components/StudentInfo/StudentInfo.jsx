@@ -105,8 +105,8 @@ export default function StudentInfo() {
                   <i className={`${Style.silveri} fa-solid fa-medal fs-2`}></i>
                 </div>
                 <div>
-                  <h4>الثاني : أحمد محمد عبدالله</h4>
-                  <h4>النتيجة : 409/410</h4>
+                <h4>التاني : {topFive[1]?.name}</h4>
+                <h4>النتيجة : {topFive[1]?.average}</h4>
                 </div>
               </div>
               <div className="d-flex align-items-center mt-2 p-2">
@@ -114,8 +114,8 @@ export default function StudentInfo() {
                   <i className={`${Style.bronzi} fa-solid fa-medal fs-2`}></i>
                 </div>
                 <div>
-                  <h4>الثالث : أحمد محمد عبدالله</h4>
-                  <h4>النتيجة : 409/410</h4>
+                <h4>التالت : {topFive[2]?.name}</h4>
+                <h4>النتيجة : {topFive[2]?.average}</h4>
                 </div>
               </div>
               <div className="d-flex align-items-center mt-2 p-2">
@@ -123,8 +123,8 @@ export default function StudentInfo() {
                   <i className="fa-solid fa-star fs-2"></i>
                 </div>
                 <div>
-                  <h4>الرابع : أحمد محمد عبدالله</h4>
-                  <h4>النتيجة : 409/410</h4>
+                <h4>الرابع : {topFive[3]?.name}</h4>
+                <h4>النتيجة : {topFive[3]?.average}</h4>
                 </div>
               </div>
               <div className="d-flex align-items-center mt-2 accordion p-2">
@@ -132,8 +132,8 @@ export default function StudentInfo() {
                   <i className="fa-solid fa-star fs-2"></i>
                 </div>
                 <div>
-                  <h4>الخامس : أحمد محمد عبدالله</h4>
-                  <h4>النتيجة : 409/410</h4>
+                <h4>الخامس : {topFive[4]?.name}</h4>
+                <h4>النتيجة : {topFive[4]?.average}</h4>
                 </div>
               </div>
             </div>

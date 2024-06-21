@@ -211,7 +211,7 @@ export default function SpecificStudent() {
                   <h3 className="mt-3 p-2">كود الطالب : {studentData.studentCode}</h3>
                   <h3 className="mt-3 p-2">سعر الحصة : {studentData.price}</h3>
                   <h3 className="mt-3 p-2">سعر الكتب : {studentData.bookPrice}</h3>
-                  <h3 className="mt-3 p-2">الوصف : {studentData.description}</h3>
+                  <h3 className="mt-3 p-2">ملاحظات : {studentData.description}</h3>
                 </>
               )}
             </div>

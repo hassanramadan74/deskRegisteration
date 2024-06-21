@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import Style from './LoginStudent.module.css';
-import pic from '../LoginStudent/smiling-students-with-backpacks.jpg';
+import pic from '../LoginStudent/Student login.png';
 import axios from 'axios';
 import {jwtDecode} from 'jwt-decode';
 import { UserContext } from '../../Context/userContext.js';

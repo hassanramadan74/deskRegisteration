@@ -114,7 +114,7 @@ export default function StudentInfo() {
                   <i className={`${Style.bronzi} fa-solid fa-medal fs-2`}></i>
                 </div>
                 <div>
-                <h4>التالت : {topFive[2]?.name}</h4>
+                <h4>الثالث : {topFive[2]?.name}</h4>
                 <h4>النتيجة : {topFive[2]?.average}</h4>
                 </div>
               </div>
@@ -150,7 +150,7 @@ export default function StudentInfo() {
                   <h3 className="mt-3 p-2">رقم الوالد : {studentData.guardianPhoneNumber}</h3>
                   <h3 className="mt-3 p-2">كود الطالب : {studentData.studentCode}</h3>
                   <h3 className="mt-3 p-2">سعر الحصة : {studentData.price}</h3>
-                  <h3 className="mt-3 p-2">سعر الكتب : {studentData.bookPrice}</h3>
+                  <h3 className="mt-3 p-2">سعر الكتب : {studentData.books}</h3>
                   <h3 className="mt-3 p-2">الوصف : {studentData.description}</h3>
                 </>
               )}

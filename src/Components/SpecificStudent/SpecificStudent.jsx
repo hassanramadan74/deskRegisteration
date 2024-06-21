@@ -174,7 +174,7 @@ export default function SpecificStudent() {
                   <i className={`${Style.bronzi} fa-solid fa-medal fs-2`}></i>
                 </div>
                 <div>
-                <h4>التالت : {topFiv[2]?.name}</h4>
+                <h4>الثالث : {topFiv[2]?.name}</h4>
                 <h4>النتيجة : {topFiv[2]?.average}</h4>
                 </div>
               </div>

@@ -7,18 +7,21 @@ import UpdateStudentModal from './UpdateStudentGrade.jsx';
 export default function AnotherModal({ isVisible, onClose, examGrades , studentID }) {
 
   const [showUpdateModal, setShowUpdateModal] = useState(false);
-  const [selectedHomeWork, setselectedHomeWork] = useState(null);
+  const [selectedExam, setSelectedExam] = useState(null);
 
-  const handleUpdateShow = (selectedHomeWork) => {
-    setselectedHomeWork(selectedHomeWork);
+  const handleUpdateShow = (selectedExam) => {
+    setSelectedExam(selectedExam);
     setShowUpdateModal(true);
   };
 
   const handleUpdateClose = () => setShowUpdateModal(false);
+
   const deleteStudent = async (id) => {
+    console.log(studentID);
+    console.log('Deleting student with ID:', id); // Debugging log
     try {
       await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${studentID}/${id}`);
-      Swal.fire('Deleted!', 'exam grade has been deleted.', 'success');
+      Swal.fire('Deleted!', 'Exam grade has been deleted.', 'success');
     } catch (error) {
       console.error('Error deleting exam grade:', error);
       Swal.fire('Error!', 'Could not delete exam grade.', 'error');
@@ -26,6 +29,7 @@ export default function AnotherModal({ isVisible, onClose, examGrades , studentI
   };
 
   const handleDeleteClick = (id) => {
+    console.log('Handle delete click for ID:', id); // Debugging log
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -40,6 +44,7 @@ export default function AnotherModal({ isVisible, onClose, examGrades , studentI
       }
     });
   };
+
   if (!isVisible) return null;
 
   return (
@@ -62,36 +67,37 @@ export default function AnotherModal({ isVisible, onClose, examGrades , studentI
           <tbody>
             {Array.isArray(examGrades) && examGrades.length > 0 ? (
               examGrades.map(exam => {
+             // Debugging log
                 return (
                   <tr key={exam._id}>
                     <td>{exam.lecture}</td>
                     <td>{exam.grade}</td>
                     <td>
-                    <button onClick={() => handleUpdateShow(exam)}>
-                      <i className="fa-solid fa-file-pen text-success fs-3"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <button onClick={() => handleDeleteClick(exam._id)}>
-                      <i className="fa-solid fa-trash text-danger fs-3"></i>
-                    </button>
-                  </td>
+                      <button onClick={() => handleUpdateShow(exam)}>
+                        <i className="fa-solid fa-file-pen text-success fs-3"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <button onClick={() => handleDeleteClick(exam._id)}>
+                        <i className="fa-solid fa-trash text-danger fs-3"></i>
+                      </button>
+                    </td>
                   </tr>
                 );
               })
             ) : (
               <tr>
-                <td colSpan="2">لا توجد بيانات</td>
+                <td colSpan="4">لا توجد بيانات</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      {selectedHomeWork && (
+      {selectedExam && (
         <UpdateStudentModal
           show={showUpdateModal}
           handleClose={handleUpdateClose}
-          examGrade={selectedHomeWork}
+          examGrade={selectedExam}
           singleStudent={studentID}
         />
       )}

@@ -17,6 +17,7 @@ import Absentees from './Components/Absentees/Absentees.jsx';
 import LoginStudent from './Components/LoginStudent/LoginStudent.jsx';
 import LayoutStudent from './Components/LayoutStudent/LayoutStudent.jsx';
 import StudentInfo from './Components/StudentInfo/StudentInfo.jsx';
+import SignUp from './Components/SignUp/SignUp.jsx';
 
 
 
@@ -29,6 +30,7 @@ let routers = createHashRouter([
     {path:'group/:ID',element: <ProtectedRoute><Session/></ProtectedRoute>},
     {path:'group/:ID/:sessionID',element:<ProtectedRoute><AttendenceStudents/> </ProtectedRoute>},
     {path:'students' , element: <ProtectedRoute><Students/></ProtectedRoute>},
+    {path:'register' , element: <ProtectedRoute><SignUp/></ProtectedRoute>},
     {path:'attendence' , element: <ProtectedRoute><Attendence/></ProtectedRoute>},
     {path:'absentees' , element: <ProtectedRoute><Absentees/></ProtectedRoute>},
     {path:'attendence/:ID' , element: <ProtectedRoute><QrcodeAttendence/></ProtectedRoute>},

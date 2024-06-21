@@ -34,6 +34,7 @@ export default function SpecificStudent() {
     .then(response => {
       setAttendanceRecords(response.data.attendanceRecords);
       setStudent(response.data.student);
+      console.log(response.data.student.group);
       setGroupID(response.data.student.group)
       setExamGrades(response.data.student.examGrades)
       setHomeWork(response.data.student.homeWork)
@@ -48,6 +49,7 @@ export default function SpecificStudent() {
   const topFive = async () => {
     try {
       const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${groupID}/Top5`);
+      console.log(response);
       setTopFiv(response.data.topScores)
     } catch (error) {
       console.error('Error fetching group data:', error);
@@ -61,7 +63,7 @@ export default function SpecificStudent() {
 
   useEffect(() => {
     getSingleStudent()
-    // topFive()
+    topFive()
   }, [studentData])
   
 
@@ -196,7 +198,7 @@ export default function SpecificStudent() {
               </div>
             </div>
             <div className={`${Style.bgNav} p-4 rounded-2 mt-3`}>
-              <h3 className="text-center text-white fw-bolder">نتيجتك : {studentData?.averageGrades} </h3>
+              <h3 className="text-center text-white fw-bolder">نتيجتك :  {studentData?.averageGrades} </h3>
             </div>
           </div>
           <div className="col-md-6 mt-md-0 mt-3">
@@ -245,6 +247,7 @@ export default function SpecificStudent() {
         isVisible={isModalExamVisible}
         onClose={handleCloseExamGradeModal}
         examGrades={examGrades}
+        studentID={studentID}
       />
 
 

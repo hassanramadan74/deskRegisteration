@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './Students.module.css';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
 import ModalComponent from '../Modal/Modal.jsx';
@@ -16,6 +16,7 @@ export default function Students() {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('Name');
+  let navigate = useNavigate();
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -94,7 +95,9 @@ export default function Students() {
     }
     return false;
   });
-
+  const handleStudentLogin = () => {
+    navigate('/register');
+  };
   return (
     <>
       <Helmet>
@@ -132,11 +135,14 @@ export default function Students() {
                   </ul>
                 </div>
               </div>
-              <Link onClick={handleShow} className='d-none d-md-block order-2 order-md-1 mb-3 mb-md-0'>
-                <div className={`${Style.romadyBorder} p-3 rounded-1`}>
-                  <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
-                </div>
-              </Link>
+              <div className="d-none d-md-flex order-2 order-md-1 mb-3 mb-md-0">
+                <Link onClick={handleShow}>
+                  <div className={`${Style.romadyBorder} p-3 rounded-1`}>
+                    <i className={`${Style.textMoza} fa-solid fa-plus`}></i>
+                  </div>
+                </Link>
+                <button onClick={handleStudentLogin} className={`${Style.cordi} py-3 px-3 rounded-2 fw-bolder ms-3`}>Sign up</button>
+              </div>
             </div>
           </div>
 
@@ -181,7 +187,7 @@ export default function Students() {
                 <div className="col-md-3 text-dark" key={student._id}>
                   <div className={`${Style.romadyi} position-relative p-4 rounded-2`}>
                     <div className='d-flex justify-content-end'>
-                    <i onClick={() => barCodeClick(student._id)}  class="fa-solid fa-qrcode fs-2 cursor-pointer"></i>
+                      <i onClick={() => barCodeClick(student._id)} className="fa-solid fa-qrcode fs-2 cursor-pointer"></i>
                     </div>
                     <Link to={`/students/${student._id}`} className="w-100 h-100">
                       <h4>الاسم:<span className="h5"> {student.Name}</span></h4>
@@ -190,7 +196,7 @@ export default function Students() {
                       <h4>الوصف: <span className="h4"> {student.description}</span></h4>
                       <h4>سعر الحصة: <span className="h4"> {student.price}</span></h4>
                       <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>
-                       <h4>الكتب: <span className="h4"> {student.books}</span></h4>
+                      <h4>الكتب: <span className="h4"> {student.books}</span></h4>
                     </Link>
                     <div className='d-flex justify-content-between mt-2'>
                       <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(student)}>Update</button>
@@ -213,8 +219,6 @@ export default function Students() {
           student={selectedStudent}
         />
       )}
-
-
     </>
   );
 }

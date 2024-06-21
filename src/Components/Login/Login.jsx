@@ -28,8 +28,9 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  let {setUserToken}= useContext(UserContext);
+  let { setUserToken } = useContext(UserContext);
   let navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -39,7 +40,7 @@ const Login = () => {
         password: password
       });
       if (response.data.message === 'success') {
-        localStorage.setItem("userToken",response.data.token);
+        localStorage.setItem("userToken", response.data.token);
         setUserToken(response.data.token);
         navigate('/home');
       }
@@ -53,11 +54,17 @@ const Login = () => {
     setShowPassword(!showPassword);
   };
 
+  const handleStudentLogin = () => {
+    // Handle student login logic here
+    navigate('/anotherSpace');
+  };
+
   return (
     <Flex flexDirection="column" h="100vh" alignItems="center" justifyContent="center">
-<Text mb={20} fontSize='5xl'>
-  Brought to you by <Text as='span' color='teal.500'>H&M</Text>
-</Text>      <Flex
+      <Text mb={20} fontSize='5xl'>
+        Brought to you by <Text as='span' color='teal.500'>H&M</Text>
+      </Text>
+      <Flex
         flexDirection="column"
         bg={formBackground}
         p={12}
@@ -97,17 +104,9 @@ const Login = () => {
             Log In
           </Button>
         </form>
-        {/* <FormControl display="flex" alignItems="center">
-          <FormLabel htmlFor="dark_mode" mb="0">
-            Enable Dark Mode?
-          </FormLabel>
-          <Switch
-            id="dark_mode"
-            colorScheme="teal"
-            size="lg"
-            onChange={toggleColorMode}
-          />
-        </FormControl> */}
+        <Button onClick={handleStudentLogin} colorScheme="blue">
+          Student Login
+        </Button>
       </Flex>
     </Flex>
   );

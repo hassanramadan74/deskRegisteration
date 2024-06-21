@@ -14,7 +14,7 @@ const UpdateStudentModal = ({ show, handleClose, examGrade, singleStudent }) => 
 
   const validationSchema = Yup.object().shape({
     lecture: Yup.string().required('Lecture is required'),
-    grade: Yup.string().required('Grade is required').min(0, 'Grade must be a positive number')
+    grade: Yup.number().required('Grade is required').min(0, 'Grade must be a positive number')
   });
 
   const handleSubmit = (values) => {

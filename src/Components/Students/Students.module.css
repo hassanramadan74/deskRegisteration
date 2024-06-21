@@ -39,3 +39,26 @@
     background-color: #023346;
     direction: rtl;
   }
+
+  .cordi{
+    background-color: white;
+    color: #023346;
+    border: 1px solid #023346;
+  }
+  
+  
+  
+  .cordi:hover{
+    background-color: #023346;
+    border-color: #023346;
+    color: white;
+  }
+
+
+
+
+
+
+
+
+

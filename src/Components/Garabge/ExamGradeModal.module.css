@@ -1,0 +1,89 @@
+/* Modal.module.css */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 600px;
+  text-align: right;
+  direction: rtl;
+  max-height: 80%;
+  overflow-y: auto;
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+
+.table td {
+  border-bottom: 2px solid #023346;
+  padding: 8px;
+  text-align: center;
+}
+.table th{
+  padding: 8px;
+  text-align: center;
+}
+.table th:nth-child(1){
+  border-bottom: 2px solid #023346;
+  padding: 8px;
+  text-align: center;
+}
+.table th:nth-child(2){
+  border-bottom: 2px solid #023346;
+  padding: 8px;
+  text-align: center;
+}
+.table th:nth-child(3){
+  border-bottom: 2px solid #023346;
+  padding: 8px;
+  text-align: center;
+}
+.table th:nth-child(4){
+  border-bottom: 2px solid #023346;
+  padding: 8px;
+  text-align: center;
+}
+.table td:nth-child(2){
+  padding: 8px;
+  text-align: center;
+}
+.table td:nth-child(3){
+  padding: 8px;
+  text-align: center;
+}
+.table td:nth-child(4){
+  padding: 8px;
+  text-align: center;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}

@@ -101,6 +101,63 @@
 
 
 
+  .bgNav{
+    background-color: #023346;
+  }
+  .hoverUnderline li {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .hoverUnderline li::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: -3px;
+    left: 0;
+    background-color: black; /* Change this to the desired color */
+    transition: width 0.3s;
+  }
+  
+  .hoverUnderline li:hover::after {
+    width: 100%;
+  }
+  
+  
+  
+  .giro{
+    background-color: #F7F7F8;
+  }
+  
+  
+  .goldi{
+    color: goldenrod;
+  }
+  .silveri{
+    color: silver;
+  }
+  .bronzi{
+    color: brown;
+  }
+  
+  
+  
+  
+  
+  .cordi{
+    background-color: white;
+    color: #023346;
+    border: 1px solid #023346;
+  }
+  
+  
+  
+  .cordi:hover{
+    background-color: #023346;
+    border-color: #023346;
+    color: white;
+  }
 
 
 

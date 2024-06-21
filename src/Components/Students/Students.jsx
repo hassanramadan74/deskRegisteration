@@ -190,7 +190,7 @@ export default function Students() {
                       <h4>الوصف: <span className="h4"> {student.description}</span></h4>
                       <h4>سعر الحصة: <span className="h4"> {student.price}</span></h4>
                       <h4>الكود: <span className="h4"> {student.studentCode}</span></h4>
-                      {student.books? <h4>الكتب: <span className="h4"> {student.books}</span></h4>:''}
+                       <h4>الكتب: <span className="h4"> {student.books}</span></h4>
                     </Link>
                     <div className='d-flex justify-content-between mt-2'>
                       <button className="btn btn-success w-50 mx-1" onClick={() => handleUpdateShow(student)}>Update</button>

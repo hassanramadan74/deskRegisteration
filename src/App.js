@@ -14,6 +14,9 @@ import ProtectedRoute from './Components/ProtectedRoute/ProtectedRoute.jsx';
 import Attendence from './Components/Attendence/Attendence.jsx';
 import QrcodeAttendence from './Components/QrcodeAttendence/QrcodeAttendence.jsx';
 import Absentees from './Components/Absentees/Absentees.jsx';
+import LoginStudent from './Components/LoginStudent/LoginStudent.jsx';
+import LayoutStudent from './Components/LayoutStudent/LayoutStudent.jsx';
+import StudentInfo from './Components/StudentInfo/StudentInfo.jsx';
 
 
 
@@ -31,7 +34,13 @@ let routers = createHashRouter([
     {path:'attendence/:ID' , element: <ProtectedRoute><QrcodeAttendence/></ProtectedRoute>},
     {path:'students/:studentID' , element:<ProtectedRoute><SpecificStudent/></ProtectedRoute>},
     {path:'*' , element:<Notfound/>}
-  ]}
+  ]},
+    { path:'/anotherSpace',element:<LayoutStudent/> , children:[
+      {index:true,element:<LoginStudent/>},
+      {path:'studentInfo' , element:<StudentInfo/>},
+      {path:'*' , element:<Notfound/>}
+    ]}
+  
 ])
 
 

@@ -5,20 +5,20 @@ import * as Yup from 'yup';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-const UpdateStudentModal = ({ show, handleClose, student ,singleStudent}) => {
+const UpdateStudentModal = ({ show, handleClose, homework ,singleStudent}) => {
 
   const initialValues = {
-    lecture: student.lecture || '',
-    grade: student.grade || ''
+    assignment: homework.assignment || '',
+    grade: homework.grade || ''
   };
 
   const validationSchema = Yup.object().shape({
-    lecture: Yup.string().optional(),
+    assignment: Yup.string().optional(),
     grade: Yup.string().optional()
   });
 
   const handleSubmit = (values) => {
-    axios.patch(`https://registration-80nq.onrender.com/api/v2/students/${singleStudent}/${student._id}`, values)
+    axios.patch(`https://registration-80nq.onrender.com/api/v2/students/${singleStudent}/${homework._id}/homeWork`, values)
       .then(response => {
         toast.success('grade updated successfully!');
         handleClose();
@@ -32,7 +32,7 @@ const UpdateStudentModal = ({ show, handleClose, student ,singleStudent}) => {
   return (
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
-        <Modal.Title>Update Student</Modal.Title>
+        <Modal.Title>Update homework</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Formik
@@ -43,15 +43,15 @@ const UpdateStudentModal = ({ show, handleClose, student ,singleStudent}) => {
         >
           {({ errors, touched }) => (
             <FormikForm>
-              <Form.Group className="mb-3" controlId="formlecture">
-                <Form.Label>lecture</Form.Label>
+              <Form.Group className="mb-3" controlId="formAssignment">
+                <Form.Label>assignment</Form.Label>
                 <Field
-                  name="lecture"
+                  name="assignment"
                   type="text"
                   placeholder="Enter name"
-                  className={`form-control ${touched.lecture && errors.lecture ? 'is-invalid' : ''}`}
+                  className={`form-control ${touched.assignment && errors.assignment ? 'is-invalid' : ''}`}
                 />
-                <ErrorMessage name="lecture" component="div" className="invalid-feedback" />
+                <ErrorMessage name="assignment" component="div" className="invalid-feedback" />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formgrade">
                 <Form.Label>grade</Form.Label>

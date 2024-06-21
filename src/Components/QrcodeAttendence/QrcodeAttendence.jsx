@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 export default function QrcodeAttendence() {
   const { ID } = useParams();
   const [student, setStudent] = useState();
+  const [lastAttendence, setlastAttendence] = useState(null);
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(localStorage.getItem('selectedGroup') || '');
@@ -29,9 +30,21 @@ export default function QrcodeAttendence() {
         setLoading(false);
       });
   }
+  function getlastAttendence() {
+    axios.get(`https://registration-80nq.onrender.com/api/v2/attendance/${ID}`)
+      .then(response => {
+        setlastAttendence(response.data.lastAttendanceRecord.date);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching student:', error);
+        setLoading(false);
+      });
+  }
 
   useEffect(() => {
     getSingleStudent();
+    getlastAttendence();
   }, [ID]);
 
   useEffect(() => {
@@ -139,11 +152,13 @@ export default function QrcodeAttendence() {
               <div className="col-md-6 my-3">
                 <h2 className={`${Style.poppinsRegular} `}>سعر الكتب : {student?.books}</h2>
               </div>
-              {student?.description ? (
+            
                 <div className="col-md-6 my-3">
                   <h2 className={`${Style.poppinsRegular} `}>الوصف : {student?.description} </h2>
                 </div>
-              ) : null}
+                <div className="col-md-6 my-3">
+                  <h2 className={`${Style.poppinsRegular} `}>اخر حضور : {lastAttendence} </h2>
+                </div>
               <div className="col-md-6 my-3 d-flex">
                 <select
                   className="form-select w-50"

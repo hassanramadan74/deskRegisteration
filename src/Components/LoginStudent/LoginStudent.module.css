@@ -1,0 +1,43 @@
+ .parent{
+  padding: 120px 90px;
+}
+
+
+
+
+.memo{
+  margin-top: 70px;
+}
+.mema{
+  margin-top: 50px;
+}
+
+
+.meme{
+  border-top: none;
+  border-right: none;
+  border-left: none;
+  border-bottom: 1px solid #ccc; 
+}
+
+.meme:focus{
+outline: none;
+border-bottom: 2px solid #333;
+
+}
+
+.meme::placeholder{
+font-size: 25px;
+color: #ccc;
+}
+
+.btnOutlineInfo{
+  border: #023346 1px solid;
+  color: black;
+}
+.btnOutlineInfo:hover{
+background-color:#023346 ;
+color: white;
+} 
+
+    

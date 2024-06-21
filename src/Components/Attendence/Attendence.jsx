@@ -80,7 +80,7 @@ export default function Attendence() {
                 <h1 className="text-light text-end">مستر / محسن عطية</h1>
               </div>
             </div>
-            <div className="col-md-12 d-flex justify-content-center">
+            <div className="col-md-12 d-flex justify-content-md-end justify-content-center">
               <div className="d-flex justify-content-center">
                 <div className={`${Style.romady} rounded-3 p-3`}>
                   <ul className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}>

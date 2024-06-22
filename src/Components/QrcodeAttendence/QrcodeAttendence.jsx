@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './QrcodeAttendence.module.css';
 import axios from 'axios';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 
@@ -14,6 +14,7 @@ export default function QrcodeAttendence() {
   const [selectedGroup, setSelectedGroup] = useState(localStorage.getItem('selectedGroup') || '');
   const [sessions, setSessions] = useState([]);
   const [selectedSession, setSelectedSession] = useState(localStorage.getItem('selectedSession') || '');
+  const navigate = useNavigate(); // Hook from react-router-dom for navigation
 
   const containerStyle = {
     direction: 'rtl',
@@ -30,6 +31,7 @@ export default function QrcodeAttendence() {
         setLoading(false);
       });
   }
+
   function getlastAttendence() {
     axios.get(`https://registration-80nq.onrender.com/api/v2/attendance/${ID}`)
       .then(response => {
@@ -90,29 +92,15 @@ export default function QrcodeAttendence() {
     axios.post(`https://registration-80nq.onrender.com/api/v2/attendance/${selectedGroup}/${selectedSession}/${ID}`)
       .then(response => {
         toast.success('Attendance marked successfully!');
+        // Update URL with new QR code link
+        navigate(`/attendence/${response.data.qrCodeLink}`);
       })
       .catch(error => {
         console.error('Error marking attendance:', error);
         toast.error('Failed to mark attendance');
       });
   };
-  const location = useLocation();
 
-  useEffect(() => {
-    // Function to select the URL in the address bar
-    const selectUrl = () => {
-      const url = window.location.href;
-      const tempInput = document.createElement('input');
-      document.body.appendChild(tempInput);
-      tempInput.value = url;
-      tempInput.select();
-      tempInput.setSelectionRange(0, 99999); // For mobile devices
-      document.body.removeChild(tempInput);
-    };
-
-    // Select the URL when the component mounts
-    selectUrl();
-  }, [location]);
   return (
     <>
       <Helmet>
@@ -168,13 +156,12 @@ export default function QrcodeAttendence() {
               <div className="col-md-6 my-3">
                 <h2 className={`${Style.poppinsRegular} `}>سعر الكتب : {student?.books}</h2>
               </div>
-            
-                <div className="col-md-6 my-3">
-                  <h2 className={`${Style.poppinsRegular} `}>الوصف : {student?.description} </h2>
-                </div>
-                <div className="col-md-6 my-3">
-                  <h2 className={`${Style.poppinsRegular} `}>اخر حضور : {lastAttendence} </h2>
-                </div>
+              <div className="col-md-6 my-3">
+                <h2 className={`${Style.poppinsRegular} `}>الوصف : {student?.description} </h2>
+              </div>
+              <div className="col-md-6 my-3">
+                <h2 className={`${Style.poppinsRegular} `}>اخر حضور : {lastAttendence} </h2>
+              </div>
               <div className="col-md-6 my-3 d-flex">
                 <select
                   className="form-select w-50"

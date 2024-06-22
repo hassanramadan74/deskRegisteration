@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './Students.module.css';
 import axios from 'axios';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Oval } from 'react-loader-spinner';
 import { Helmet } from 'react-helmet';
 import ModalComponent from '../Modal/Modal.jsx';
@@ -17,6 +17,7 @@ export default function Students() {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('Name');
   let navigate = useNavigate();
+  const location = useLocation(); // Hook to get current location
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -37,7 +38,8 @@ export default function Students() {
         console.error('Error fetching students:', error);
         setLoading(false);
       });
-  }, [students]);
+  }, []);
+
 
   const deleteStudent = async (id) => {
     try {
@@ -57,7 +59,7 @@ export default function Students() {
       Swal.fire({
         title: 'Student Barcode',
         html: `<div style="display: flex; justify-content: center; align-items: center;">
-        <${barcodeImage} alt="Generated Barcode" />
+        <img src="${barcodeImage}" alt="Generated Barcode" />
       </div>`,
         imageAlt: 'Generated Barcode',
         showCloseButton: true,
@@ -95,9 +97,7 @@ export default function Students() {
     }
     return false;
   });
-  const handleStudentLogin = () => {
-    navigate('/register');
-  };
+
   return (
     <>
       <Helmet>

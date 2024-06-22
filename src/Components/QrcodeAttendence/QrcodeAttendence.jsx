@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './QrcodeAttendence.module.css';
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 
@@ -96,8 +96,23 @@ export default function QrcodeAttendence() {
         toast.error('Failed to mark attendance');
       });
   };
+  const location = useLocation();
 
-  
+  useEffect(() => {
+    // Function to select the URL in the address bar
+    const selectUrl = () => {
+      const url = window.location.href;
+      const tempInput = document.createElement('input');
+      document.body.appendChild(tempInput);
+      tempInput.value = url;
+      tempInput.select();
+      tempInput.setSelectionRange(0, 99999); // For mobile devices
+      document.body.removeChild(tempInput);
+    };
+
+    // Select the URL when the component mounts
+    selectUrl();
+  }, [location]);
   return (
     <>
       <Helmet>

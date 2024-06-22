@@ -97,16 +97,6 @@ export default function QrcodeAttendence() {
       });
   };
 
-  useEffect(() => {
-    // Select the URL in the address bar
-    const url = window.location.href;
-    const tempInput = document.createElement('input');
-    document.body.appendChild(tempInput);
-    tempInput.value = url;
-    tempInput.select();
-    tempInput.setSelectionRange(0, 99999); // For mobile devices
-    document.body.removeChild(tempInput);
-  }, []);
   
   return (
     <>

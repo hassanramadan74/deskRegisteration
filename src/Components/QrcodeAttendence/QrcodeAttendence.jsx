@@ -14,7 +14,6 @@ export default function QrcodeAttendence() {
   const [selectedGroup, setSelectedGroup] = useState(localStorage.getItem('selectedGroup') || '');
   const [sessions, setSessions] = useState([]);
   const [selectedSession, setSelectedSession] = useState(localStorage.getItem('selectedSession') || '');
-  const navigate = useNavigate(); // Hook from react-router-dom for navigation
 
   const containerStyle = {
     direction: 'rtl',
@@ -101,16 +100,12 @@ export default function QrcodeAttendence() {
       });
   };
 
-  const triggerF6Key = () => {
-    const event = new KeyboardEvent('keydown', { key: 'F6', keyCode: 117, which: 117, bubbles: true, cancelable: true });
-    document.dispatchEvent(event);
-  };
+
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Enter') {
         handleAttendance();
-        triggerF6Key();
       }
     };
 
@@ -122,7 +117,6 @@ export default function QrcodeAttendence() {
 
   const handleButtonClick = () => {
     handleAttendance();
-    triggerF6Key();
   };
 
   return (

@@ -93,13 +93,26 @@ export default function QrcodeAttendence() {
       .then(response => {
         toast.success('Attendance marked successfully!');
         // Update URL with new QR code link
-        navigate(`/attendence/${response.data.qrCodeLink}`);
+        // navigate(`/attendence/${response.data.qrCodeLink}`);
       })
       .catch(error => {
         console.error('Error marking attendance:', error);
         toast.error('Failed to mark attendance');
       });
   };
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        handleAttendance();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedGroup, selectedSession]);
 
   return (
     <>

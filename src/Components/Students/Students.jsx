@@ -16,8 +16,6 @@ export default function Students() {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('Name');
-  let navigate = useNavigate();
-  const location = useLocation(); // Hook to get current location
 
   const handleShow = () => setShowModal(true);
   const handleClose = () => setShowModal(false);
@@ -59,7 +57,7 @@ export default function Students() {
       Swal.fire({
         title: 'Student Barcode',
         html: `<div style="display: flex; justify-content: center; align-items: center;">
-        <img src="${barcodeImage}" alt="Generated Barcode" />
+        <${barcodeImage} alt="Generated Barcode" />
       </div>`,
         imageAlt: 'Generated Barcode',
         showCloseButton: true,

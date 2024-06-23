@@ -4,35 +4,31 @@ import {
   Heading,
   Input,
   Button,
-  FormControl,
-  FormLabel,
-  Switch,
-  useColorMode,
-  useColorModeValue,
   IconButton,
   InputGroup,
   InputRightElement,
   Icon,
   Text,
+  Box, // Import Box from Chakra UI for positioning
 } from '@chakra-ui/react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md'; // Import icons from react-icons
 
 import axios from 'axios';
 import { UserContext } from '../../Context/userContext.js';
 import { useNavigate } from 'react-router-dom';
+import { Oval } from 'react-loader-spinner'; // Import Oval loader from react-loader-spinner
 
 const Login = () => {
-  const { toggleColorMode } = useColorMode();
-  const formBackground = useColorModeValue('teal.200', 'green.200');
-
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading indicator
   let { setUserToken } = useContext(UserContext);
   let navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true); // Set loading to true on form submit
 
     try {
       const response = await axios.post('https://registration-80nq.onrender.com/api/v2/auth/signin', {
@@ -47,6 +43,8 @@ const Login = () => {
     } catch (error) {
       console.error('Error:', error.response.data);
       // Handle error (e.g., display error message)
+    } finally {
+      setLoading(false); // Set loading to false after request completes (success or error)
     }
   };
 
@@ -66,11 +64,23 @@ const Login = () => {
       </Text>
       <Flex
         flexDirection="column"
-        bg={formBackground}
+        bg="teal.200"
         p={12}
         borderRadius={8}
         boxShadow="lg"
+        position="relative" // Set position to relative for parent container
       >
+        {loading && ( // Conditionally render the loader
+          <Box
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)" // Center the loader
+            zIndex="9999" // Set a high z-index to ensure it appears above other elements
+          >
+            <Oval width={24} height={24} color="green" />
+          </Box>
+        )}
         <Heading color="black" mb={6}>Log In</Heading>
         <form onSubmit={handleSubmit}>
           <Input
@@ -100,11 +110,11 @@ const Login = () => {
               />
             </InputRightElement>
           </InputGroup>
-          <Button type="submit" colorScheme="teal" mb={8} width="100%" >
-            Log In
+          <Button type="submit" colorScheme="teal" mb={8} width="100%" disabled={loading}>
+            {loading ? 'Logging in...' : 'Log In'}
           </Button>
         </form>
-        <Button onClick={handleStudentLogin} colorScheme="blue">
+        <Button onClick={handleStudentLogin} colorScheme="blue" disabled={loading}>
           Student Login
         </Button>
       </Flex>

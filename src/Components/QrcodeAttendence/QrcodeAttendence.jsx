@@ -91,8 +91,6 @@ export default function QrcodeAttendence() {
     axios.post(`https://registration-80nq.onrender.com/api/v2/attendance/${selectedGroup}/${selectedSession}/${ID}`)
       .then(response => {
         toast.success('Attendance marked successfully!');
-        // Update URL with new QR code link
-        // navigate(`/attendence/${response.data.qrCodeLink}`);
       })
       .catch(error => {
         console.error('Error marking attendance:', error);

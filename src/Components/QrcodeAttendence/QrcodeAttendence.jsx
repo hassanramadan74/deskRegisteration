@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './QrcodeAttendence.module.css';
 import axios from 'axios';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 
@@ -96,15 +96,21 @@ export default function QrcodeAttendence() {
         // navigate(`/attendence/${response.data.qrCodeLink}`);
       })
       .catch(error => {
-        console.error('Error marking attendance: attend in the session before', error);
-        toast.error('Failed to mark attendance , attend in the session before');
+        console.error('Error marking attendance:', error);
+        toast.error('Failed to mark attendance due to attendance before');
       });
+  };
+
+  const triggerF6Key = () => {
+    const event = new KeyboardEvent('keydown', { key: 'F6', keyCode: 117, which: 117, bubbles: true, cancelable: true });
+    document.dispatchEvent(event);
   };
 
   useEffect(() => {
     const handleKeyDown = (event) => {
       if (event.key === 'Enter') {
         handleAttendance();
+        triggerF6Key();
       }
     };
 
@@ -113,6 +119,11 @@ export default function QrcodeAttendence() {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [selectedGroup, selectedSession]);
+
+  const handleButtonClick = () => {
+    handleAttendance();
+    triggerF6Key();
+  };
 
   return (
     <>
@@ -200,7 +211,7 @@ export default function QrcodeAttendence() {
                 )}
               </div>
               <div className="col-md-12 my-3">
-                <button className='btn btn-success w-100' onClick={handleAttendance}>Attend</button>
+                <button className='btn btn-success w-100' onClick={handleButtonClick}>Attend</button>
               </div>
             </div>
           </div>

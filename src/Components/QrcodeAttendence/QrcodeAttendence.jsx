@@ -96,7 +96,7 @@ export default function QrcodeAttendence() {
         // navigate(`/attendence/${response.data.qrCodeLink}`);
       })
       .catch(error => {
-        console.error('Error marking attendance:', error);
+        console.error('Error marking attendance: attend in the session before', error);
         toast.error('Failed to mark attendance');
       });
   };

@@ -78,7 +78,6 @@ export default function Absentees() {
         .then(response => {
           console.log(response);
           setAbsentees(response.data.absentees);
-          toast.success('Attendance data fetched successfully!');
         })
         .catch(error => {
           console.error('Error fetching attendance:', error);
@@ -88,11 +87,11 @@ export default function Absentees() {
   }, [selectedGroup, selectedSession]);
   const filteredStudents = absentees.filter(student => {
     if (searchOption === 'Name') {
-      return student.Name.toLowerCase().includes(searchTerm.toLowerCase());
+      return student?.Name?.toLowerCase()?.includes(searchTerm?.toLowerCase());
     } else if (searchOption === 'phoneNumber') {
-      return student.phoneNumber.includes(searchTerm);
+      return student?.phoneNumber?.includes(searchTerm);
     } else if (searchOption === 'studentCode') {
-      return String(student.studentCode).includes(searchTerm);
+      return String(student?.studentCode)?.includes(searchTerm);
     }
     return false;
   });

@@ -100,18 +100,18 @@ export default function QrcodeAttendence() {
 
 
 
-  // useEffect(() => {
-  //   const handleKeyDown = (event) => {
-  //     if (event.key === 'Enter') {
-  //       handleAttendance();
-  //     }
-  //   };
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (event.key === 'Enter') {
+        handleAttendance();
+      }
+    };
 
-  //   document.addEventListener('keydown', handleKeyDown);
-  //   return () => {
-  //     document.removeEventListener('keydown', handleKeyDown);
-  //   };
-  // }, [selectedGroup, selectedSession]);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [selectedGroup, selectedSession]);
 
   const handleButtonClick = () => {
     handleAttendance();

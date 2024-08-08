@@ -59,7 +59,25 @@ export default function Students() {
     setShowUpdateModal(true);
   }, []);
 
-  const handleUpdateClose = useCallback(() => setShowUpdateModal(false), []);
+  const handleUpdateClose = useCallback(async (updatedStudent) => {
+    if (updatedStudent) {
+      try {
+        // Optionally, you could update the student directly here
+        setStudents(prevStudents => 
+          prevStudents.map(student =>
+            student._id === updatedStudent._id ? updatedStudent : student
+          )
+        );
+
+        // Re-fetch the student list to ensure data consistency
+        const response = await axios.get('https://registration-80nq.onrender.com/api/v2/students');
+        setStudents(response.data.students);
+      } catch (error) {
+        console.error('Error fetching students:', error);
+      }
+    }
+    setShowUpdateModal(false);
+  }, []);
 
   useEffect(() => {
     axios.get('https://registration-80nq.onrender.com/api/v2/students')
@@ -71,7 +89,7 @@ export default function Students() {
         console.error('Error fetching students:', error);
         setLoading(false);
       });
-  }, [students]); // Fetch data only once on component mount
+  }, []); // Fetch data only once on component mount
 
   const deleteStudent = useCallback(async (id) => {
     try {

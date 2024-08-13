@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Style from "./AttendenceStudents.module.css";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
@@ -7,27 +8,25 @@ import { Helmet } from "react-helmet";
 import toast from "react-hot-toast";
 import ReactPaginate from "react-paginate";
 
+const fetchStudents = async () => {
+  const response = await axios.get("https://registration-80nq.onrender.com/api/v2/students");
+  return response.data.students;
+};
+
 export default function AttendenceStudents() {
   const { ID, sessionID } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("Name");
   const [currentPage, setCurrentPage] = useState(0);
-  const studentsPerPage = 8; // Number of students per page
+  const studentsPerPage = 20; // Number of students per page
 
-  useEffect(() => {
-    axios
-      .get("https://registration-80nq.onrender.com/api/v2/students")
-      .then((response) => {
-        setStudents(response.data.students);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching students:", error);
-        setLoading(false);
-      });
-  }, []);
+  const queryClient = useQueryClient();
+
+  const { data: students, isLoading, isError, error } = useQuery({
+    queryKey: ["students"],
+    queryFn: fetchStudents,
+    refetchInterval: 1000, // Refetch every 1 second
+  });
 
   const attendStudent = async (id) => {
     try {
@@ -35,13 +34,15 @@ export default function AttendenceStudents() {
         `https://registration-80nq.onrender.com/api/v2/attendance/${ID}/${sessionID}/${id}`
       );
       toast.success("Student attend successfully!");
+      // Invalidate and refetch the students query to update the data
+      queryClient.invalidateQueries(["students"]);
     } catch (error) {
       console.error("Error attending student:", error);
       toast.error("Student cannot be attend.");
     }
   };
 
-  const filteredStudents = students.filter((student) => {
+  const filteredStudents = students?.filter((student) => {
     if (searchOption === "Name") {
       return student?.Name?.toLowerCase()?.includes(searchTerm?.toLowerCase());
     } else if (searchOption === "phoneNumber") {
@@ -50,7 +51,7 @@ export default function AttendenceStudents() {
       return String(student?.studentCode)?.includes(searchTerm);
     }
     return false;
-  });
+  }) || [];
 
   // Calculate pagination data
   const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
@@ -145,7 +146,7 @@ export default function AttendenceStudents() {
             </div>
           </div>
 
-          {loading ? (
+          {isLoading ? (
             <div className="d-flex justify-content-center">
               <Oval
                 visible={true}
@@ -156,6 +157,10 @@ export default function AttendenceStudents() {
                 wrapperStyle={{}}
                 wrapperClass=""
               />
+            </div>
+          ) : isError ? (
+            <div className="d-flex justify-content-center text-danger">
+              <h2>Error: {error.message}</h2>
             </div>
           ) : (
             <div className="row gy-5" style={{ direction: "rtl" }}>

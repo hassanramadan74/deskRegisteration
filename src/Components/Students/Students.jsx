@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useCallback, useMemo, Suspense } from 'react';
+import React, { useState, useCallback, useMemo, Suspense } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Style from './Students.module.css';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -38,18 +39,31 @@ const StudentCard = React.memo(({ student, handleUpdateShow, handleDeleteClick, 
   );
 });
 
+const fetchStudents = async () => {
+  const response = await axios.get('https://registration-80nq.onrender.com/api/v2/students');
+  return response.data.students;
+};
+
 export default function Students() {
-  const [loading, setLoading] = useState(true);
-  const [students, setStudents] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateModal, setShowUpdateModal] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchOption, setSearchOption] = useState('Name');
   const [currentPage, setCurrentPage] = useState(0);
-  const studentsPerPage = 8;
+  const studentsPerPage = 20;
 
   const [debouncedSearchTerm] = useDebounce(searchTerm, 300);
+
+  const queryClient = useQueryClient();
+
+  const { data: students, isLoading, error } = useQuery({
+    queryKey: ['students'],
+    queryFn: fetchStudents,
+    staleTime: 5 * 1000, // 5 seconds
+    refetchInterval: 1000
+  });
+  
 
   const handleShow = useCallback(() => setShowModal(true), []);
   const handleClose = useCallback(() => setShowModal(false), []);
@@ -61,46 +75,28 @@ export default function Students() {
 
   const handleUpdateClose = useCallback(async (updatedStudent) => {
     if (updatedStudent) {
-      try {
-        // Optionally, you could update the student directly here
-        setStudents(prevStudents => 
-          prevStudents.map(student =>
-            student._id === updatedStudent._id ? updatedStudent : student
-          )
-        );
-
-        // Re-fetch the student list to ensure data consistency
-        const response = await axios.get('https://registration-80nq.onrender.com/api/v2/students');
-        setStudents(response.data.students);
-      } catch (error) {
-        console.error('Error fetching students:', error);
-      }
+      queryClient.setQueryData(['students'], (oldData) => 
+        oldData.map(student =>
+          student._id === updatedStudent._id ? updatedStudent : student
+        )
+      );
+      queryClient.invalidateQueries(['students']);
     }
     setShowUpdateModal(false);
-  }, []);
-
-  useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/students')
-      .then(response => {
-        setStudents(response.data.students);
-        setLoading(false);
-      })
-      .catch(error => {
-        console.error('Error fetching students:', error);
-        setLoading(false);
-      });
-  }, []); // Fetch data only once on component mount
+  }, [queryClient]);
 
   const deleteStudent = useCallback(async (id) => {
     try {
       await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${id}`);
-      setStudents(prevStudents => prevStudents.filter(student => student._id !== id));
+      queryClient.setQueryData(['students'], (oldData) => 
+        oldData.filter(student => student._id !== id)
+      );
       Swal.fire('Deleted!', 'Student has been deleted.', 'success');
     } catch (error) {
       console.error('Error deleting student:', error);
       Swal.fire('Error!', 'Could not delete student.', 'error');
     }
-  }, []);
+  }, [queryClient]);
 
   const barCodeClick = useCallback(async (id) => {
     try {
@@ -109,8 +105,8 @@ export default function Students() {
       Swal.fire({
         title: 'Student Barcode',
         html: `<div style="display: flex; justify-content: center; align-items: center;">
-        <img src="${barcodeImage}" alt="Generated Barcode" />
-      </div>`,
+          <${barcodeImage} alt="Generated Barcode" />
+        </div>`,
         imageAlt: 'Generated Barcode',
         showCloseButton: true,
         showConfirmButton: false
@@ -138,7 +134,7 @@ export default function Students() {
   }, [deleteStudent]);
 
   const filteredStudents = useMemo(() => {
-    return students.filter(student => {
+    return students?.filter(student => {
       if (searchOption === 'Name') {
         return student?.Name?.toLowerCase()?.includes(debouncedSearchTerm?.toLowerCase());
       } else if (searchOption === 'phoneNumber') {
@@ -147,7 +143,7 @@ export default function Students() {
         return String(student?.studentCode)?.includes(debouncedSearchTerm);
       }
       return false;
-    });
+    }) || [];
   }, [students, searchOption, debouncedSearchTerm]);
 
   const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
@@ -228,9 +224,13 @@ export default function Students() {
             </div>
           </div>
           {/* Students List */}
-          {loading ? (
+          {isLoading ? (
             <div className="d-flex justify-content-center align-items-center">
               <Oval height="100" width="100" color="#ff0000" secondaryColor="#00ff00" />
+            </div>
+          ) : error ? (
+            <div className="d-flex justify-content-center align-items-center text-danger">
+              <h1>Error fetching students: {error.message}</h1>
             </div>
           ) : (
             <div className="row g-2">

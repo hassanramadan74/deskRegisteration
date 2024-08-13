@@ -10,7 +10,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './index.css';
 import UserContextProvider from './Context/userContext.js';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const customTheme = extendTheme({
     styles: {
@@ -22,10 +24,12 @@ const customTheme = extendTheme({
     },
   });
 root.render(
+  <QueryClientProvider client={queryClient}>
     <UserContextProvider>
     <ChakraProvider theme={customTheme}>
     <CSSReset />
     <App />
   </ChakraProvider>
   </UserContextProvider>
+  </QueryClientProvider>
 );

@@ -24,7 +24,7 @@ const ModalComponent = ({ show, handleClose, studentID }) => {
       grade: values.grade
     };
 
-    axios.post(`https://registration-80nq.onrender.com/api/v2/students/${studentID}/homeWork`, submitValues)
+    axios.post(`https://registration-production-c3f5.up.railway.app/api/v2/students/${studentID}/homeWork`, submitValues)
       .then(response => {
         console.log('Homework added successfully:', response.data);
         toast.success('Homework added successfully!');

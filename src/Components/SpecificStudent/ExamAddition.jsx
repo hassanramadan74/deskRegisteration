@@ -24,7 +24,7 @@ const ExamAddition = ({ show, handleClose, studentID }) => {
       grade: values.grade
     };
 
-    axios.post(`https://registration-80nq.onrender.com/api/v2/students/${studentID}/examGrades`, submitValues)
+    axios.post(`https://registration-production-c3f5.up.railway.app/api/v2/students/${studentID}/examGrades`, submitValues)
       .then(response => {
         console.log('exam added successfully:', response.data);
         toast.success('exam added successfully!');

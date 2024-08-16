@@ -20,7 +20,7 @@ export default function AnotherModal({ isVisible, onClose, examGrades , studentI
     console.log(studentID);
     console.log('Deleting student with ID:', id); // Debugging log
     try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${studentID}/${id}`);
+      await axios.delete(`https://registration-production-c3f5.up.railway.app/api/v2/students/${studentID}/${id}`);
       Swal.fire('Deleted!', 'Exam grade has been deleted.', 'success');
     } catch (error) {
       console.error('Error deleting exam grade:', error);

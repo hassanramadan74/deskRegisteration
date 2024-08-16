@@ -24,7 +24,7 @@ setShowUpdateModal(true);
 
   const handleUpdateClose = () => setShowUpdateModal(false);
   useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/groups')
+    axios.get('https://registration-production-c3f5.up.railway.app/api/v2/groups')
       .then(response => {
         console.log(response);
         setGroups(response.data.groups);
@@ -39,7 +39,7 @@ setShowUpdateModal(true);
 
   const deleteStudent = async (id) => {
     try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/groups/${id}`);
+      await axios.delete(`https://registration-production-c3f5.up.railway.app/api/v2/groups/${id}`);
       setGroups(groups.filter(group => group._id !== id));
       Swal.fire('Deleted!', 'group has been deleted.', 'success');
     } catch (error) {

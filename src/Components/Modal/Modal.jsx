@@ -10,7 +10,7 @@ const ModalComponent = ({ show, handleClose }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/groups')
+    axios.get('https://registration-production-c3f5.up.railway.app/api/v2/groups')
       .then(response => {
         console.log(response);
         setGroups(response.data.groups);
@@ -61,7 +61,7 @@ const ModalComponent = ({ show, handleClose }) => {
       delete submitValues.books;
     }
     console.log(submitValues);
-    axios.post('https://registration-80nq.onrender.com/api/v2/students', submitValues)
+    axios.post('https://registration-production-c3f5.up.railway.app/api/v2/students', submitValues)
       .then(response => {
         console.log('Student added successfully:', response.data);
         toast.success('Student added successfully!');

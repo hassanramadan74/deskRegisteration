@@ -18,7 +18,7 @@ export default function LoginStudent() {
     };
 
     try {
-      const response = await axios.post('https://registration-80nq.onrender.com/api/v2/auth/signStudent', payload);
+      const response = await axios.post('https://registration-production-c3f5.up.railway.app/api/v2/auth/signStudent', payload);
       const token = response.data.token;
       const decodedToken = jwtDecode(token);
       setStudentToken(decodedToken.studentId);

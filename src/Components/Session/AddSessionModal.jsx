@@ -22,7 +22,7 @@ const AddSessionModal = ({ show, handleClose ,groupID}) => {
 
 
     console.log(submitValues);
-    axios.post(`https://registration-80nq.onrender.com/api/v2/sessions/${groupID}`, submitValues)
+    axios.post(`https://registration-production-c3f5.up.railway.app/api/v2/sessions/${groupID}`, submitValues)
       .then(response => {
         console.log('session added successfully:', response.data);
         toast.success('session added successfully!');

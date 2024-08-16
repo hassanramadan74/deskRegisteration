@@ -27,7 +27,7 @@ export default function Session() {
   const handleUpdateClose = () => setShowUpdateModal(false);
 
   useEffect(() => {
-    axios.get(`https://registration-80nq.onrender.com/api/v2/sessions/${ID}`)
+    axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/sessions/${ID}`)
       .then(response => {
         setSessions(response.data.sessions);
         setLoading(false);
@@ -40,7 +40,7 @@ export default function Session() {
 
   const deleteSession = async (id) => {
     try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/sessions/${ID}/${id}`);
+      await axios.delete(`https://registration-production-c3f5.up.railway.app/api/v2/sessions/${ID}/${id}`);
       setSessions(sessions.filter(session => session._id !== id));
       Swal.fire('Deleted!', 'Session has been deleted.', 'success');
     } catch (error) {

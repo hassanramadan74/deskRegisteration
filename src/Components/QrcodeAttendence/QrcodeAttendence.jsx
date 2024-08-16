@@ -20,7 +20,7 @@ export default function QrcodeAttendence() {
   };
 
   function getSingleStudent() {
-    axios.get(`https://registration-80nq.onrender.com/api/v2/students/${ID}`)
+    axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/students/${ID}`)
       .then(response => {
         setStudent(response.data.student);
         setLoading(false);
@@ -32,7 +32,7 @@ export default function QrcodeAttendence() {
   }
 
   function getlastAttendence() {
-    axios.get(`https://registration-80nq.onrender.com/api/v2/attendance/${ID}`)
+    axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/attendance/${ID}`)
       .then(response => {
         setlastAttendence(response.data.lastAttendanceRecord.date);
         setLoading(false);
@@ -49,7 +49,7 @@ export default function QrcodeAttendence() {
   }, [ID]);
 
   useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/groups')
+    axios.get('https://registration-production-c3f5.up.railway.app/api/v2/groups')
       .then(response => {
         setGroups(response.data.groups);
         setLoading(false);
@@ -62,7 +62,7 @@ export default function QrcodeAttendence() {
 
   useEffect(() => {
     if (selectedGroup) {
-      axios.get(`https://registration-80nq.onrender.com/api/v2/sessions/${selectedGroup}`)
+      axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/sessions/${selectedGroup}`)
         .then(response => {
           setSessions(response.data.sessions);
           setLoading(false);
@@ -88,7 +88,7 @@ export default function QrcodeAttendence() {
       return;
     }
 
-    axios.post(`https://registration-80nq.onrender.com/api/v2/attendance/${selectedGroup}/${selectedSession}/${ID}`)
+    axios.post(`https://registration-production-c3f5.up.railway.app/api/v2/attendance/${selectedGroup}/${selectedSession}/${ID}`)
       .then(response => {
         toast.success('Attendance marked successfully!');
       })

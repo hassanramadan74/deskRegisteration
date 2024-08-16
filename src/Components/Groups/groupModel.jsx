@@ -22,7 +22,7 @@ const GroupModel = ({ show, handleClose }) => {
 
 
     console.log(submitValues);
-    axios.post('https://registration-80nq.onrender.com/api/v2/groups', submitValues)
+    axios.post('https://registration-production-c3f5.up.railway.app/api/v2/groups', submitValues)
       .then(response => {
         console.log('group added successfully:', response.data);
         toast.success('group added successfully!');

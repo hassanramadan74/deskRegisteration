@@ -40,7 +40,7 @@ const StudentCard = React.memo(({ student, handleUpdateShow, handleDeleteClick, 
 });
 
 const fetchStudents = async () => {
-  const response = await axios.get('https://registration-80nq.onrender.com/api/v2/students');
+  const response = await axios.get('https://registration-production-c3f5.up.railway.app/api/v2/students');
   return response.data.students;
 };
 
@@ -87,7 +87,7 @@ export default function Students() {
 
   const deleteStudent = useCallback(async (id) => {
     try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${id}`);
+      await axios.delete(`https://registration-production-c3f5.up.railway.app/api/v2/students/${id}`);
       queryClient.setQueryData(['students'], (oldData) => 
         oldData.filter(student => student._id !== id)
       );
@@ -100,7 +100,7 @@ export default function Students() {
 
   const barCodeClick = useCallback(async (id) => {
     try {
-      const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${id}/qrcode`);
+      const response = await axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/students/${id}/qrcode`);
       const barcodeImage = response.data;
       Swal.fire({
         title: 'Student Barcode',

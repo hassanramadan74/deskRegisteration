@@ -18,7 +18,7 @@ export default function HomeworkModal({ isVisible, onClose, homeWork, studentID 
 
   const deleteStudent = async (id) => {
     try {
-      await axios.delete(`https://registration-80nq.onrender.com/api/v2/students/${studentID}/${id}/homeWork`);
+      await axios.delete(`https://registration-production-c3f5.up.railway.app/api/v2/students/${studentID}/${id}/homeWork`);
       Swal.fire('Deleted!', 'Homework has been deleted.', 'success');
     } catch (error) {
       console.error('Error deleting homework:', error);

@@ -22,7 +22,7 @@ export default function StudentInfo() {
     // Function to fetch student data
     const fetchStudentData = async () => {
       try {
-        const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${studentID}`);
+        const response = await axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/students/${studentID}`);
         setStudentData(response.data.student);
         setGroupID(response.data.student.group)
         setHomeWork(response.data.student.homeWork)
@@ -40,7 +40,7 @@ export default function StudentInfo() {
     }
     const topFive = async () => {
       try {
-        const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${groupID}/Top5`);
+        const response = await axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/students/${groupID}/Top5`);
         setTopFive(response.data.topScores)
       } catch (error) {
         console.error('Error fetching student data:', error);

@@ -30,7 +30,7 @@ export default function SpecificStudent() {
   const handleExamShow = () => setShowExamModal(true);
   const handleExamClose = () => setShowExamModal(false);
   function getSingleStudent (){
-    axios.get(`https://registration-80nq.onrender.com/api/v2/students/${studentID}`)
+    axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/students/${studentID}`)
     .then(response => {
       setAttendanceRecords(response.data.attendanceRecords);
       setStudent(response.data.student);
@@ -48,7 +48,7 @@ export default function SpecificStudent() {
 
   const topFive = async () => {
     try {
-      const response = await axios.get(`https://registration-80nq.onrender.com/api/v2/students/${groupID}/Top5`);
+      const response = await axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/students/${groupID}/Top5`);
       console.log(response);
       setTopFiv(response.data.topScores)
     } catch (error) {

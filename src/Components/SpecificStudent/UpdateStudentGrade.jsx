@@ -18,7 +18,7 @@ const UpdateStudentModal = ({ show, handleClose, examGrade, singleStudent }) => 
   });
 
   const handleSubmit = (values) => {
-    axios.patch(`https://registration-80nq.onrender.com/api/v2/students/${singleStudent}/${examGrade._id}`, values)
+    axios.patch(`https://registration-production-c3f5.up.railway.app/api/v2/students/${singleStudent}/${examGrade._id}`, values)
       .then(response => {
         console.log('Grade updated successfully:', response.data);
         toast.success('Grade updated successfully!');

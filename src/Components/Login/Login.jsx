@@ -31,7 +31,7 @@ const Login = () => {
     setLoading(true); // Set loading to true on form submit
 
     try {
-      const response = await axios.post('https://registration-80nq.onrender.com/api/v2/auth/signin', {
+      const response = await axios.post('https://registration-production-c3f5.up.railway.app/api/v2/auth/signin', {
         email: email,
         password: password
       });

@@ -17,7 +17,7 @@ export default function Attendence() {
   const [sessionDetails, setSessionDetails] = useState(null);
 
   useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/groups')
+    axios.get('https://registration-production-c3f5.up.railway.app/api/v2/groups')
       .then(response => {
         setGroups(response.data.groups);
         setLoading(false);
@@ -33,7 +33,7 @@ export default function Attendence() {
     setSelectedGroup(groupID);
 
     // Fetch sessions for the selected group
-    axios.get(`https://registration-80nq.onrender.com/api/v2/sessions/${groupID}`)
+    axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/sessions/${groupID}`)
       .then(response => {
         setSessions(response.data.sessions);
       })
@@ -50,7 +50,7 @@ export default function Attendence() {
   
   useEffect(() => {
     if (selectedGroup && selectedSession) {
-      axios.get(`https://registration-80nq.onrender.com/api/v2/sessions/${selectedGroup}/${selectedSession}`)
+      axios.get(`https://registration-production-c3f5.up.railway.app/api/v2/sessions/${selectedGroup}/${selectedSession}`)
         .then(response => {
           setSessionDetails(response.data);
         })

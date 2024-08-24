@@ -18,14 +18,14 @@ export default function AttendenceStudents() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("Name");
   const [currentPage, setCurrentPage] = useState(0);
-  const studentsPerPage = 20; // Number of students per page
+  const studentsPerPage = 20;
 
   const queryClient = useQueryClient();
 
   const { data: students, isLoading, isError, error } = useQuery({
     queryKey: ["students"],
     queryFn: fetchStudents,
-    refetchInterval: 1000, // Refetch every 1 second
+    refetchInterval: 1000, 
   });
 
   const attendStudent = async (id) => {
@@ -34,7 +34,6 @@ export default function AttendenceStudents() {
         `https://registration-production-c3f5.up.railway.app/api/v2/attendance/${ID}/${sessionID}/${id}`
       );
       toast.success("Student attend successfully!");
-      // Invalidate and refetch the students query to update the data
       queryClient.invalidateQueries(["students"]);
     } catch (error) {
       console.error("Error attending student:", error);
@@ -53,7 +52,7 @@ export default function AttendenceStudents() {
     return false;
   }) || [];
 
-  // Calculate pagination data
+
   const pageCount = Math.ceil(filteredStudents.length / studentsPerPage);
   const currentStudents = filteredStudents.slice(
     currentPage * studentsPerPage,
@@ -179,7 +178,7 @@ export default function AttendenceStudents() {
                     <h4>
                       {" "}
                       الحضور :{" "}
-                      <span className="h4"> {student.lastAttendance.date}</span>
+                      <span className="h4"> {student.lastAttendance?.date}</span>
                     </h4>
                     <h4>
                       الوصف: <span className="h4"> {student.description}</span>

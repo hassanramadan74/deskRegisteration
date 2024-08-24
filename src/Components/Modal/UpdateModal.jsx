@@ -10,7 +10,7 @@ const UpdateModal = ({ show, handleClose, student }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('https://registration-80nq.onrender.com/api/v2/groups')
+    axios.get('https://registration-production-c3f5.up.railway.app/api/v2/groups')
       .then(response => {
         setGroups(response.data.groups);
         setLoading(false);
@@ -56,7 +56,7 @@ const UpdateModal = ({ show, handleClose, student }) => {
     if (!updatedValues.description) {
       delete updatedValues.description;
     }
-    axios.put(`https://registration-80nq.onrender.com/api/v2/students/${student._id}`, updatedValues)
+    axios.put(`https://registration-production-c3f5.up.railway.app/api/v2/students/${student._id}`, updatedValues)
       .then(response => {
         console.log(response);
         toast.success('Student updated successfully!');

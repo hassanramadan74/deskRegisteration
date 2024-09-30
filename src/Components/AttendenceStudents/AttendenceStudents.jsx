@@ -19,7 +19,7 @@ export default function AttendenceStudents() {
   const [searchOption, setSearchOption] = useState("Name");
   const [currentPage, setCurrentPage] = useState(0);
   const studentsPerPage = 20;
-
+const [loading, setloading] = useState(false)
   const queryClient = useQueryClient();
 
   const { data: students, isLoading, isError, error } = useQuery({
@@ -30,10 +30,12 @@ export default function AttendenceStudents() {
 
   const attendStudent = async (id) => {
     try {
+      setloading(true)
       await axios.post(
         `https://registration-production-c3f5.up.railway.app/api/v2/attendance/${ID}/${sessionID}/${id}`
       );
       toast.success("Student attend successfully!");
+      setloading(false)
       queryClient.invalidateQueries(["students"]);
     } catch (error) {
       console.error("Error attending student:", error);
@@ -195,6 +197,7 @@ export default function AttendenceStudents() {
                     <div className="d-flex justify-content-center my-2">
                       <button
                         className="btn btn-success w-50 mx-1"
+                        disabled={loading}
                         onClick={() => attendStudent(student._id)}
                       >
                         attend

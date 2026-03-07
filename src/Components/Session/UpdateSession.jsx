@@ -17,7 +17,7 @@ const UpdateSession = ({ show, handleClose, session, groupID }) => {
   });
 
   const handleSubmit = (values) => {
-    axios.put(`https://registration-80nq.onrender.com/api/v2/sessions/${groupID}/${session._id}`, values)
+    axios.put(`https://registration-production-7fcd.up.railway.app/api/v2/sessions/${groupID}/${session._id}`, values)
       .then(response => {
         toast.success('Session updated successfully!');
         handleClose();

@@ -1,51 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const ModalComponent = ({ show, handleClose }) => {
   const [groups, setGroups] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('https://registration-production-7fcd.up.railway.app/api/v2/groups')
-      .then(response => {
+    axios
+      .get("https://registration-production-7fcd.up.railway.app/api/v2/groups")
+      .then((response) => {
         console.log(response);
         setGroups(response.data.groups);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching groups:', error);
+      .catch((error) => {
+        console.error("Error fetching groups:", error);
         setLoading(false);
       });
   }, []);
 
   const initialValues = {
-    Name: '',
-    phoneNumber: '',
-    guardianPhoneNumber: '',
-    description: '',
-    group: '',
-    price: '',
-    books: '' // New field for the number of books
+    Name: "",
+    phoneNumber: "",
+    guardianPhoneNumber: "",
+    description: "",
+    group: "",
+    price: "",
+    books: "", // New field for the number of books
   };
 
   const validationSchema = Yup.object().shape({
     Name: Yup.string()
-      .min(2, 'Name must be at least 2 characters long')
-      .required('Name is required'),
+      .min(2, "Name must be at least 2 characters long")
+      .required("Name is required"),
     phoneNumber: Yup.string()
-      .matches(/^\d{11}$/, 'Phone number must be exactly 11 digits')
-      .required('Phone number is required'),
+      .matches(/^\d{11}$/, "Phone number must be exactly 11 digits")
+      .required("Phone number is required"),
     guardianPhoneNumber: Yup.string()
-      .matches(/^\d{11}$/, 'Guardian phone number must be exactly 11 digits')
-      .required('Guardian phone number is required'),
+      .matches(/^\d{11}$/, "Guardian phone number must be exactly 11 digits")
+      .required("Guardian phone number is required"),
     description: Yup.string().optional(),
-    group: Yup.string().required('Please select a group'),
-    price: Yup.number().optional().min(0, 'Price must be a positive number'),
-    books: Yup.number().optional().min(0, 'books must be a positive number')
+    group: Yup.string().required("Please select a group"),
+    price: Yup.number().optional().min(0, "Price must be a positive number"),
+    books: Yup.number().optional().min(0, "books must be a positive number"),
   });
 
   const handleSubmit = (values) => {
@@ -61,15 +62,19 @@ const ModalComponent = ({ show, handleClose }) => {
       delete submitValues.books;
     }
     console.log(submitValues);
-    axios.post('https://registration-production-7fcd.up.railway.app/api/v2/students', submitValues)
-      .then(response => {
-        console.log('Student added successfully:', response.data);
-        toast.success('Student added successfully!');
+    axios
+      .post(
+        "https://registration-production-7fcd.up.railway.app/api/v2/students",
+        submitValues
+      )
+      .then((response) => {
+        console.log("Student added successfully:", response.data);
+        toast.success("Student added successfully!");
         handleClose();
       })
-      .catch(error => {
-        console.error('Error adding student:', error);
-        toast.error('Student cannot be added.');
+      .catch((error) => {
+        console.error("Error adding student:", error);
+        toast.error("Student cannot be added.");
       });
   };
 
@@ -92,9 +97,15 @@ const ModalComponent = ({ show, handleClose }) => {
                   name="Name"
                   type="text"
                   placeholder="Enter name"
-                  className={`form-control ${touched.Name && errors.Name ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.Name && errors.Name ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="Name" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="Name"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formPhoneNumber">
                 <Form.Label>Phone Number</Form.Label>
@@ -102,9 +113,17 @@ const ModalComponent = ({ show, handleClose }) => {
                   name="phoneNumber"
                   type="text"
                   placeholder="Enter phone number"
-                  className={`form-control ${touched.phoneNumber && errors.phoneNumber ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.phoneNumber && errors.phoneNumber
+                      ? "is-invalid"
+                      : ""
+                  }`}
                 />
-                <ErrorMessage name="phoneNumber" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="phoneNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGuardianPhoneNumber">
                 <Form.Label>Guardian Phone Number</Form.Label>
@@ -112,9 +131,17 @@ const ModalComponent = ({ show, handleClose }) => {
                   name="guardianPhoneNumber"
                   type="text"
                   placeholder="Enter guardian phone number"
-                  className={`form-control ${touched.guardianPhoneNumber && errors.guardianPhoneNumber ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.guardianPhoneNumber && errors.guardianPhoneNumber
+                      ? "is-invalid"
+                      : ""
+                  }`}
                 />
-                <ErrorMessage name="guardianPhoneNumber" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="guardianPhoneNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formDescription">
                 <Form.Label>Description</Form.Label>
@@ -122,25 +149,39 @@ const ModalComponent = ({ show, handleClose }) => {
                   name="description"
                   type="text"
                   placeholder="Enter description"
-                  className={`form-control ${touched.description && errors.description ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.description && errors.description
+                      ? "is-invalid"
+                      : ""
+                  }`}
                 />
-                <ErrorMessage name="description" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGroup">
                 <Form.Label>Group</Form.Label>
                 <Field
                   name="group"
                   as="select"
-                  className={`form-control ${touched.group && errors.group ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.group && errors.group ? "is-invalid" : ""
+                  }`}
                 >
                   <option value="">Select a group</option>
-                  {groups.map(group => (
+                  {groups.map((group) => (
                     <option key={group._id} value={group._id}>
                       {group.Name}
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="group" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="group"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formPrice">
                 <Form.Label>Price</Form.Label>
@@ -148,9 +189,15 @@ const ModalComponent = ({ show, handleClose }) => {
                   name="price"
                   type="number"
                   placeholder="Enter price"
-                  className={`form-control ${touched.price && errors.price ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.price && errors.price ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="price" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="price"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBooks">
                 <Form.Label>Books</Form.Label>
@@ -158,9 +205,15 @@ const ModalComponent = ({ show, handleClose }) => {
                   name="books"
                   type="number"
                   placeholder="Enter price of books"
-                  className={`form-control ${touched.books && errors.books ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.books && errors.books ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="books" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="books"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

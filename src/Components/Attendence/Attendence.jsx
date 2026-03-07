@@ -1,29 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import Style from './Attendence.module.css';
-import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
-import { Oval } from 'react-loader-spinner';
-import { Helmet } from 'react-helmet';
-import toast from 'react-hot-toast';
-import { Select, Flex, Heading, Box, Text } from '@chakra-ui/react';
+import React, { useEffect, useState } from "react";
+import Style from "./Attendence.module.css";
+import axios from "axios";
+import { Link, useParams } from "react-router-dom";
+import { Oval } from "react-loader-spinner";
+import { Helmet } from "react-helmet";
+import { Select, Flex, Heading, Box, Text } from "@chakra-ui/react";
 
 export default function Attendence() {
-  const { ID, sessionID } = useParams();
   const [loading, setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedGroup, setSelectedGroup] = useState("");
   const [sessions, setSessions] = useState([]);
-  const [selectedSession, setSelectedSession] = useState('');
+  const [selectedSession, setSelectedSession] = useState("");
   const [sessionDetails, setSessionDetails] = useState(null);
 
   useEffect(() => {
-    axios.get('https://registration-production-7fcd.up.railway.app/api/v2/groups')
-      .then(response => {
+    axios
+      .get("https://registration-production-7fcd.up.railway.app/api/v2/groups")
+      .then((response) => {
         setGroups(response.data.groups);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching groups:', error);
+      .catch((error) => {
+        console.error("Error fetching groups:", error);
         setLoading(false);
       });
   }, []);
@@ -33,12 +32,15 @@ export default function Attendence() {
     setSelectedGroup(groupID);
 
     // Fetch sessions for the selected group
-    axios.get(`https://registration-production-7fcd.up.railway.app/api/v2/sessions/${groupID}`)
-      .then(response => {
+    axios
+      .get(
+        `https://registration-production-7fcd.up.railway.app/api/v2/sessions/${groupID}`
+      )
+      .then((response) => {
         setSessions(response.data.sessions);
       })
-      .catch(error => {
-        console.error('Error fetching sessions:', error);
+      .catch((error) => {
+        console.error("Error fetching sessions:", error);
       });
   };
 
@@ -46,26 +48,20 @@ export default function Attendence() {
     setSelectedSession(event.target.value);
   };
 
-
-  
   useEffect(() => {
     if (selectedGroup && selectedSession) {
-      axios.get(`https://registration-production-7fcd.up.railway.app/api/v2/sessions/${selectedGroup}/${selectedSession}`)
-        .then(response => {
+      axios
+        .get(
+          `https://registration-production-7fcd.up.railway.app/api/v2/sessions/${selectedGroup}/${selectedSession}`
+        )
+        .then((response) => {
           setSessionDetails(response.data);
         })
-        .catch(error => {
-          console.error('Error fetching session details:', error);
+        .catch((error) => {
+          console.error("Error fetching session details:", error);
         });
     }
   }, [selectedGroup, selectedSession]);
-
-
-
-
-
-
-
 
   return (
     <>
@@ -76,25 +72,49 @@ export default function Attendence() {
         <div className="container-fluid">
           <div className="row mb-4">
             <div className="col-md-12 mb-4">
-              <div className={`${Style.bgPrimaryMoza} ${Style.bar} w-100 rounded-2 p-4`}>
+              <div
+                className={`${Style.bgPrimaryMoza} ${Style.bar} w-100 rounded-2 p-4`}
+              >
                 <h1 className="text-light text-end">مستر / محسن عطية</h1>
               </div>
             </div>
             <div className="col-md-12 d-flex justify-content-md-end justify-content-center">
               <div className="d-flex justify-content-center">
                 <div className={`${Style.romady} rounded-3 p-3`}>
-                  <ul className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}>
+                  <ul
+                    className={`${Style.poppinsRegular} d-flex justify-content-between list-unstyled text-decoration-none flex-md-row flex-column text-white`}
+                  >
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/students'} className="text-decoration-none text-white fw-bolder">Students</Link>
+                      <Link
+                        to={"/students"}
+                        className="text-decoration-none text-white fw-bolder"
+                      >
+                        Students
+                      </Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/group'} className="text-decoration-none text-white fw-bolder">Groups</Link>
+                      <Link
+                        to={"/group"}
+                        className="text-decoration-none text-white fw-bolder"
+                      >
+                        Groups
+                      </Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/attendence'} className="text-decoration-none text-white fw-bolder">Sessions</Link>
+                      <Link
+                        to={"/attendence"}
+                        className="text-decoration-none text-white fw-bolder"
+                      >
+                        Sessions
+                      </Link>
                     </li>
                     <li className="mx-5 mb-md-0 mb-2">
-                      <Link to={'/absentees'} className="text-decoration-none text-white fw-bolder">Attendance</Link>
+                      <Link
+                        to={"/absentees"}
+                        className="text-decoration-none text-white fw-bolder"
+                      >
+                        Attendance
+                      </Link>
                     </li>
                   </ul>
                 </div>
@@ -109,8 +129,11 @@ export default function Attendence() {
                 {loading ? (
                   <Oval color="#00BFFF" height={80} width={80} />
                 ) : (
-                  <Select placeholder="Select group" onChange={handleGroupChange}>
-                    {groups.map(group => (
+                  <Select
+                    placeholder="Select group"
+                    onChange={handleGroupChange}
+                  >
+                    {groups.map((group) => (
                       <option key={group._id} value={group._id}>
                         {group.Name}
                       </option>
@@ -119,9 +142,14 @@ export default function Attendence() {
                 )}
                 {selectedGroup && (
                   <>
-                    <Heading mb={4} mt={4}>Select Session</Heading>
-                    <Select placeholder="Select session" onChange={handleSessionChange}>
-                      {sessions.map(session => (
+                    <Heading mb={4} mt={4}>
+                      Select Session
+                    </Heading>
+                    <Select
+                      placeholder="Select session"
+                      onChange={handleSessionChange}
+                    >
+                      {sessions.map((session) => (
                         <option key={session._id} value={session._id}>
                           {session.name}
                         </option>

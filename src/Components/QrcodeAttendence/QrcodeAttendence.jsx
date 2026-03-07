@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Style from './QrcodeAttendence.module.css';
 import axios from 'axios';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import toast from 'react-hot-toast';
 
@@ -9,7 +9,7 @@ export default function QrcodeAttendence() {
   const { ID } = useParams();
   const [student, setStudent] = useState();
   const [lastAttendence, setlastAttendence] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [ setLoading] = useState(true);
   const [groups, setGroups] = useState([]);
   const [selectedGroup, setSelectedGroup] = useState(localStorage.getItem('selectedGroup') || '');
   const [sessions, setSessions] = useState([]);

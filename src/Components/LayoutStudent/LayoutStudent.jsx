@@ -1,8 +1,7 @@
 import React from 'react';
-import Style from './LayoutStudent.module.css';
 import { Outlet } from 'react-router-dom';
 import Footer from '../Footer/Footer'
-import { Offline, Online } from "react-detect-offline";
+import { Offline } from "react-detect-offline";
 export default function LayoutStudent() {
 
   

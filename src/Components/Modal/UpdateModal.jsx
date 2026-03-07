@@ -1,54 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Form } from "react-bootstrap";
+import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const UpdateModal = ({ show, handleClose, student }) => {
   const [groups, setGroups] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get('https://registration-production-7fcd.up.railway.app/api/v2/groups')
-      .then(response => {
+    axios
+      .get("https://registration-production-7fcd.up.railway.app/api/v2/groups")
+      .then((response) => {
         setGroups(response.data.groups);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching groups:', error);
+      .catch((error) => {
+        console.error("Error fetching groups:", error);
         setLoading(false);
       });
   }, []);
 
   const initialValues = {
-    Name: student.Name || '',
-    phoneNumber: student.phoneNumber || '',
-    guardianPhoneNumber: student.guardianPhoneNumber || '',
-    description: student.description || '',
-    group: student.group || '',
-    price: student.price || '',
-    books: student.books || ''
+    Name: student.Name || "",
+    phoneNumber: student.phoneNumber || "",
+    guardianPhoneNumber: student.guardianPhoneNumber || "",
+    description: student.description || "",
+    group: student.group || "",
+    price: student.price || "",
+    books: student.books || "",
   };
 
   const validationSchema = Yup.object().shape({
     Name: Yup.string()
-      .min(2, 'Name must be at least 2 characters long')
-      .required('Name is required'),
+      .min(2, "Name must be at least 2 characters long")
+      .required("Name is required"),
     phoneNumber: Yup.string()
-      .matches(/^\d{11}$/, 'Phone number must be exactly 11 digits')
-      .required('Phone number is required'),
+      .matches(/^\d{11}$/, "Phone number must be exactly 11 digits")
+      .required("Phone number is required"),
     guardianPhoneNumber: Yup.string()
-      .matches(/^\d{11}$/, 'Guardian phone number must be exactly 11 digits')
-      .required('Guardian phone number is required'),
+      .matches(/^\d{11}$/, "Guardian phone number must be exactly 11 digits")
+      .required("Guardian phone number is required"),
     description: Yup.string().optional(),
-    group: Yup.string().required('Please select a group'),
+    group: Yup.string().required("Please select a group"),
     price: Yup.number().optional(),
-    books: Yup.number().optional()
+    books: Yup.number().optional(),
   });
 
   const handleSubmit = (values) => {
-    const updatedValues = { ...values }; 
+    const updatedValues = { ...values };
 
     if (!updatedValues.books) {
       delete updatedValues.books;
@@ -56,15 +57,19 @@ const UpdateModal = ({ show, handleClose, student }) => {
     if (!updatedValues.description) {
       delete updatedValues.description;
     }
-    axios.put(`https://registration-production-7fcd.up.railway.app/api/v2/students/${student._id}`, updatedValues)
-      .then(response => {
+    axios
+      .put(
+        `https://registration-production-7fcd.up.railway.app/api/v2/students/${student._id}`,
+        updatedValues
+      )
+      .then((response) => {
         console.log(response);
-        toast.success('Student updated successfully!');
+        toast.success("Student updated successfully!");
         handleClose();
       })
-      .catch(error => {
-        console.error('Error updating student:', error);
-        toast.error('Could not update student.');
+      .catch((error) => {
+        console.error("Error updating student:", error);
+        toast.error("Could not update student.");
       });
   };
 
@@ -88,9 +93,15 @@ const UpdateModal = ({ show, handleClose, student }) => {
                   name="Name"
                   type="text"
                   placeholder="Enter name"
-                  className={`form-control ${touched.Name && errors.Name ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.Name && errors.Name ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="Name" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="Name"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formPhoneNumber">
                 <Form.Label>Phone Number</Form.Label>
@@ -98,9 +109,17 @@ const UpdateModal = ({ show, handleClose, student }) => {
                   name="phoneNumber"
                   type="text"
                   placeholder="Enter phone number"
-                  className={`form-control ${touched.phoneNumber && errors.phoneNumber ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.phoneNumber && errors.phoneNumber
+                      ? "is-invalid"
+                      : ""
+                  }`}
                 />
-                <ErrorMessage name="phoneNumber" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="phoneNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGuardianPhoneNumber">
                 <Form.Label>Guardian Phone Number</Form.Label>
@@ -108,9 +127,17 @@ const UpdateModal = ({ show, handleClose, student }) => {
                   name="guardianPhoneNumber"
                   type="text"
                   placeholder="Enter guardian phone number"
-                  className={`form-control ${touched.guardianPhoneNumber && errors.guardianPhoneNumber ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.guardianPhoneNumber && errors.guardianPhoneNumber
+                      ? "is-invalid"
+                      : ""
+                  }`}
                 />
-                <ErrorMessage name="guardianPhoneNumber" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="guardianPhoneNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formDescription">
                 <Form.Label>Description</Form.Label>
@@ -118,25 +145,39 @@ const UpdateModal = ({ show, handleClose, student }) => {
                   name="description"
                   type="text"
                   placeholder="Enter description"
-                  className={`form-control ${touched.description && errors.description ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.description && errors.description
+                      ? "is-invalid"
+                      : ""
+                  }`}
                 />
-                <ErrorMessage name="description" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formGroup">
                 <Form.Label>Group</Form.Label>
                 <Field
                   name="group"
                   as="select"
-                  className={`form-control ${touched.group && errors.group ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.group && errors.group ? "is-invalid" : ""
+                  }`}
                 >
                   <option value="">Select a group</option>
-                  {groups.map(group => (
+                  {groups.map((group) => (
                     <option key={group._id} value={group._id}>
                       {group.Name}
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage name="group" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="group"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formPrice">
                 <Form.Label>Price</Form.Label>
@@ -144,9 +185,15 @@ const UpdateModal = ({ show, handleClose, student }) => {
                   name="price"
                   type="number"
                   placeholder="Enter price"
-                  className={`form-control ${touched.price && errors.price ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.price && errors.price ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="price" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="price"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBooks">
                 <Form.Label>Books</Form.Label>
@@ -154,9 +201,15 @@ const UpdateModal = ({ show, handleClose, student }) => {
                   name="books"
                   type="number"
                   placeholder="Enter number of books"
-                  className={`form-control ${touched.books && errors.books ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.books && errors.books ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="books" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="books"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
               <Modal.Footer>
                 <Button variant="secondary" onClick={handleClose}>

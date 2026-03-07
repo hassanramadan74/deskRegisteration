@@ -1,23 +1,20 @@
-import React from 'react';
-import Style from './Layout.module.css';
-import { Outlet } from 'react-router-dom';
-import Footer from '../Footer/Footer'
-import { Offline, Online } from "react-detect-offline";
+import React from "react";
+import { Outlet } from "react-router-dom";
+import Footer from "../Footer/Footer";
+import { Offline } from "react-detect-offline";
 export default function Layout() {
-
-  
-  return <>
-    <div className="container-fluid">
-  <Outlet/>
-  </div>
-  <div>
-    <Offline>
-      <div className="network">
-      Only shown offline (surprise!)
+  return (
+    <>
+      <div className="container-fluid">
+        <Outlet />
       </div>
-      </Offline>
+      <div>
+        <Offline>
+          <div className="network">Only shown offline (surprise!)</div>
+        </Offline>
 
-  <Footer/>
-  </div>
-  </>
+        <Footer />
+      </div>
+    </>
+  );
 }

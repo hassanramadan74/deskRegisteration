@@ -18,7 +18,6 @@ export default function Absentees() {
     localStorage.getItem("selectedSession") || ""
   );
   const [absentees, setAbsentees] = useState([]);
-  const [lastAttendance, setLastAttendance] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchOption, setSearchOption] = useState("Name");
   const containerStyle = {
@@ -85,7 +84,7 @@ export default function Absentees() {
 
   useEffect(() => {
     if (selectedGroup && selectedSession) {
-      // new api 
+      // new api
       axios
         .get(
           `https://registration-production-7fcd.up.railway.app/api/v2/attendance/${selectedGroup}/${selectedSession}`

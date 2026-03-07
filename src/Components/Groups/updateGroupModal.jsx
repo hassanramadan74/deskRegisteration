@@ -1,30 +1,33 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Button, Form } from 'react-bootstrap';
-import { Formik, Field, Form as FormikForm, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { Modal, Button, Form } from "react-bootstrap";
+import { Formik, Field, Form as FormikForm, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const updateGroupModal = ({ show, handleClose, group }) => {
   const initialValues = {
-    Name: group.Name || ''
+    Name: group.Name || "",
   };
 
   const validationSchema = Yup.object().shape({
     Name: Yup.string()
-      .min(2, 'Name must be at least 2 characters long')
-      .required('Name is required')
+      .min(2, "Name must be at least 2 characters long")
+      .required("Name is required"),
   });
 
   const handleSubmit = (values) => {
-    axios.put(`https://registration-production-7fcd.up.railway.app/api/v2/groups/${group._id}`, values)
-      .then(response => {
-        toast.success('group updated successfully!');
+    axios
+      .put(
+        `https://registration-production-7fcd.up.railway.app/api/v2/groups/${group._id}`,
+        values
+      )
+      .then((response) => {
+        toast.success("group updated successfully!");
         handleClose();
       })
-      .catch(error => {
-        console.error('Error updating group:', error);
-        toast.error('Could not update group.');
+      .catch((error) => {
+        console.error("Error updating group:", error);
+        toast.error("Could not update group.");
       });
   };
 
@@ -48,9 +51,15 @@ const updateGroupModal = ({ show, handleClose, group }) => {
                   name="Name"
                   type="text"
                   placeholder="Enter name"
-                  className={`form-control ${touched.Name && errors.Name ? 'is-invalid' : ''}`}
+                  className={`form-control ${
+                    touched.Name && errors.Name ? "is-invalid" : ""
+                  }`}
                 />
-                <ErrorMessage name="Name" component="div" className="invalid-feedback" />
+                <ErrorMessage
+                  name="Name"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </Form.Group>
 
               <Modal.Footer>

@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import ReactPaginate from "react-paginate";
 
 const fetchStudents = async () => {
-  const response = await axios.get("https://registration-production-c3f5.up.railway.app/api/v2/students");
+  const response = await axios.get("https://registration-production-7fcd.up.railway.app/api/v2/students");
   return response.data.students;
 };
 
@@ -30,7 +30,7 @@ export default function AttendenceStudents() {
   const attendStudent = async (id) => {
     try {
       await axios.post(
-        `https://registration-production-c3f5.up.railway.app/api/v2/attendance/${ID}/${sessionID}/${id}`
+        `https://registration-production-7fcd.up.railway.app/api/v2/attendance/${ID}/${sessionID}/${id}`
       );
       toast.success("Student attend successfully!");
       queryClient.invalidateQueries(["students"]);

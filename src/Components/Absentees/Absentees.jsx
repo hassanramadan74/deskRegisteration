@@ -85,6 +85,7 @@ export default function Absentees() {
 
   useEffect(() => {
     if (selectedGroup && selectedSession) {
+      // new api 
       axios
         .get(
           `https://registration-production-7fcd.up.railway.app/api/v2/attendance/${selectedGroup}/${selectedSession}`

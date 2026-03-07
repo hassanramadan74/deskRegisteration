@@ -27,7 +27,7 @@ export default function Absentees() {
 
   useEffect(() => {
     axios
-      .get("https://registration-production-c3f5.up.railway.app/api/v2/groups")
+      .get("https://registration-production-7fcd.up.railway.app/api/v2/groups")
       .then((response) => {
         setGroups(response.data.groups);
         setLoading(false);
@@ -42,7 +42,7 @@ export default function Absentees() {
     if (selectedGroup) {
       axios
         .get(
-          `https://registration-production-c3f5.up.railway.app/api/v2/sessions/${selectedGroup}`
+          `https://registration-production-7fcd.up.railway.app/api/v2/sessions/${selectedGroup}`
         )
         .then((response) => {
           setSessions(response.data.sessions);
@@ -65,7 +65,7 @@ export default function Absentees() {
   const barCodeClick = async (id) => {
     try {
       const response = await axios.get(
-        `https://registration-production-c3f5.up.railway.app/api/v2/students/${id}/qrcode`
+        `https://registration-production-7fcd.up.railway.app/api/v2/students/${id}/qrcode`
       );
       const barcodeImage = response.data;
       Swal.fire({
@@ -87,7 +87,7 @@ export default function Absentees() {
     if (selectedGroup && selectedSession) {
       axios
         .get(
-          `https://registration-production-c3f5.up.railway.app/api/v2/attendance/${selectedGroup}/${selectedSession}`
+          `https://registration-production-7fcd.up.railway.app/api/v2/attendance/${selectedGroup}/${selectedSession}`
         )
         .then((response) => {
           console.log(response);
